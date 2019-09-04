@@ -6,43 +6,124 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Trabalho de LFA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="regex_style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/regex-style.css" />
     <script src="./js/regex.js"></script>
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 
 <body>
-
-    <h2>JavaScript Regular Expressions</h2>
-    <p>Clique no botão para verificar os matches de strings.</p>
-    <p>Exemplo:</p>
-    <p>Use a expressão regular: ^abc$<p>
-    <form>
-        Seu Regex: <input id="input-regex" type="text" name="fname"><br>
-        Sua String: <input id="input-string" type="text" name="fname"><br>
+    <div>
+        <div class="info">
+            <h2>JavaScript Regular Expressions</h2>
+            <p>Clique no botão para verificar os matches de strings.</p>
+            <p>Exemplo:</p>
+            <p>Use a expressão regular: ^abc$<p>
+        </div>
+        <br>    
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modalCreditos">Multiplos inputs</button>
         <br>
-        <button type="button" onclick="Regexinator()">Go</button>
-    </form>
-    <br>
-    Resultado:<p id="result-regex"></p>
+        <br>
+        <div>
+            <div class="regex-input d-flex justify-content-center align-items-center container">
+                <form class="row">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Gramática</span>
+                        </div>
+                        <input type="text" class="form-control" id="RegexGrammar" aria-label="Default"
+                            aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">String</span>
+                        </div>
+                        <input type="text" class="form-control" id="RegexString" aria-label="Default"
+                            aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </form>
+            </div>
+            <button class="btn btn-dark regex-btn" type="button" onclick="Regexinator()">Verificar</button>
+        </div>
 
-    <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red">
-            <i class="large material-icons">mode_edit</i>
-        </a>
-        <ul>
-            <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-            <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-            <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-            <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-        </ul>
+        <div class="regex-return">
+            <br><br>
+            <p id="result-regex-title"><p>
+            <p id="result-regex"></p>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalCreditos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Teste para múltiplos inputs</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">String</span>
+                            </div>
+                            <input type="text" class="form-control" id="1" aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">String</span>
+                            </div>
+                            <input type="text" class="form-control" id="2" aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">String</span>
+                            </div>
+                            <input type="text" class="form-control" id="3" aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">String</span>
+                            </div>
+                            <input type="text" class="form-control" id="4" aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <p id="multiple-regex-grammar"></p>
+                        <p id="multiple-result-regex1"></p>
+                        <p id="multiple-result-regex2"></p>
+                        <p id="multiple-result-regex3"></p>
+                        <p id="multiple-result-regex4"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary regex-modal-btn-close" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary regex-modal-btn" onclick="alert('Método não implementado ainda')">Adicionar inputs</button>
+                        <button type="button" class="btn btn-primary regex-modal-btn" onclick="multipleRegexinator()">Verificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-dark regex-btn" type="button" href="index.html">Voltar página</a>
     </div>
-
 </body>
 <!-- Include dos scripts -->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="./js/bootstrap.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
 
 </html>

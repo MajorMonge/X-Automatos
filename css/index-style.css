@@ -1,0 +1,39 @@
+h1{
+    text-align: center;
+
+}
+
+b{
+    text-align: center;
+    font-size: 56px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+a{
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.main-menu{
+    margin: 0;
+}
+
+.main-menu-btn{
+    border: none;
+    width: 16%;
+    text-decoration: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.nav-wrapper{
+    text-decoration: none !important;
+}
+
+@media (min-width: 400px){
+    a{
+        color: white !important;
+        text-decoration: none !important;
+    }
+
+}

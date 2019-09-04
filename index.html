@@ -6,16 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Trabalho de LFA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="./js/main.js"></script>
+    <!--Import do materialize.css-->
+    <link type="text/css" rel="stylesheet" href="./css/materialize.css" media="screen,projection" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/index-style.css" />
+    <script src="./js/menu.js"></script>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 
 <body>
     <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Logo</a>
+        <div class="nav-wrapper grey darken-3">
+            <a class="brand-logo">Logo da Unesp aqui</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="#">AAAAAA</a></li>
                 <li><a href="#">BBBBBB</a></li>
@@ -23,26 +26,45 @@
             </ul>
         </div>
     </nav>
-    <div>
-        <h1><b>Membros da dupla</b></h1>
-        <h2>
-            Juan Cardoso da Silva
-            <br>
-            Luiz Felipe Monge
-        </h2>
-    </div>
+    <br>
+    <br>
+
+    <h1>
+        <b>Web FLA Machine</b>
+    </h1>
+
+    <br>
+    <br>
+
     <div class="main-menu center-align">
         <ul>
-            <li><a class="waves-effect waves-light btn-large" href="regex.html">Regex</a></li>
-            <li><a class="waves-effect waves-light btn-large">Gramática Linear</a></li>
-            <li><a class="waves-effect waves-light btn-large">Autômatos Finitos</a></li>
-            <li><a class="waves-effect waves-light btn-large">Créditos</a></li>
+            <li><a class="waves-effect waves-light blue-grey darken-4 btn-large main-menu-btn" href="regex.html">Regex</a></li>
+            <br>
+            <li><a class="waves-effect waves-light blue-grey darken-4 btn-large main-menu-btn">Gramática Linear</a></li>
+            <br>
+            <li><a class="waves-effect waves-light blue-grey darken-4 btn-large main-menu-btn">Autômatos Finitos</a></li>
+            <br>
+            <li><a class="waves-effect waves-light blue-grey darken-4 btn-large main-menu-btn" onclick="abrirModal('modalCreditos')">Créditos</a></li>
         </ul>
     </div>
+
+    <!-- Modal -->
+    <div class="modal " id="modalCreditos">
+        <div class="modal-content">
+            <h4>Desenvolvido por:</h4>
+            <p>Juan Cardoso da Silva</p>
+            <p>Luiz Felipe Monge</p>
+        </div>
+        <div class="modal-footer">
+            <a onclick="fecharModal('modalCreditos')" class="modal-close waves-effect blue-grey darken-4 btn-flat">Voltar</a>
+        </div>
+    </div>
+
+
 </body>
+
 <!-- Include dos scripts -->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="./js/bootstrap.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 </html>
