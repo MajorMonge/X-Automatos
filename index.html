@@ -4,67 +4,145 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Trabalho de LFA</title>
+    <title>Trabalho de LFA - Menu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--Import do materialize.css-->
-    <link type="text/css" rel="stylesheet" href="./css/materialize.css" media="screen,projection" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="./css/index-style.css" />
-    <script src="./js/menu.js"></script>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 
 <body>
-    <nav>
-        <div class="nav-wrapper grey darken-3">
-            <a class="brand-logo">Logo da Unesp aqui</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#">AAAAAA</a></li>
-                <li><a href="#">BBBBBB</a></li>
-                <li><a href="#">JavoScriptu is de besto</a></li>
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark no-select">
+        <a class="navbar-brand" href="#">
+            <span class="navbar-text">
+                <div data-icon="ei-gear" data-size="m"></div>
+                <p class="active"> Web LFA Machine</p>
+            </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="regex.html">Leitor de Expressões Regulares</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="grammar.html">Leitor de Gramática Regular</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="automatos.html">Automatos Finitos</a>
+                </li>
             </ul>
+            <span class="navbar-text">
+                <a href="#" data-toggle="modal" data-target="#sobreModalTrabalho">
+                    <div data-icon="ei-exclamation" data-size="m"></div>
+                </a>
+            </span>
         </div>
     </nav>
-    <br>
-    <br>
 
-    <h1>
-        <b>Web FLA Machine</b>
-    </h1>
+    <div id="main" class="container no-select">
+        <div class="text-center">
+            <div data-icon="ei-gear" data-size="l"></div>
+            <h1 class="text-center">
+                <b>Web LFA Machine</b>
+            </h1>
+        </div>
 
-    <br>
-    <br>
-
-    <div class="main-menu center-align">
-        <ul>
-            <li><a class="waves-effect waves-light blue-grey darken-4 btn-large main-menu-btn" href="regex.html">Regex</a></li>
-            <br>
-            <li><a class="waves-effect waves-light blue-grey darken-4 btn-large main-menu-btn">Gramática Linear</a></li>
-            <br>
-            <li><a class="waves-effect waves-light blue-grey darken-4 btn-large main-menu-btn">Autômatos Finitos</a></li>
-            <br>
-            <li><a class="waves-effect waves-light blue-grey darken-4 btn-large main-menu-btn" onclick="abrirModal('modalCreditos')">Créditos</a></li>
-        </ul>
+        <div class="">
+            <div class="main-menu text-center">
+                <ul>
+                    <li>
+                        <a href="regex.html" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Leitor
+                            de
+                            Expressões Regulares</a>
+                    </li>
+                    <li>
+                        <a href="grammar.html" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Leitor de
+                            Gramática Regular</a>
+                    </li>
+                    <li>
+                        <a href="automatos.html" class="btn btn-secondary btn-lg" role="button"
+                            aria-pressed="true">Automatos
+                            Finitos</a>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal"
+                            data-target="#sobreModal">
+                            Sobre o Trabalho
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- Modal -->
-    <div class="modal " id="modalCreditos">
-        <div class="modal-content">
-            <h4>Desenvolvido por:</h4>
-            <p>Juan Cardoso da Silva</p>
-            <p>Luiz Felipe Monge</p>
-        </div>
-        <div class="modal-footer">
-            <a onclick="fecharModal('modalCreditos')" class="modal-close waves-effect blue-grey darken-4 btn-flat">Voltar</a>
+    <div class="modal fade" id="sobreModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>SOBRE O TRABALHO</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6><b>Feito por:</b></h6>
+                    <p>Juan Cardoso da Silva</p>
+                    <p>Luiz Felipe Monge</p>
+                </div>
+                <div class="modal-footer">
+                    <small style="margin-top: auto; text-align: center; text-align: justify;">
+                        <p>2019</p>
+                    </small>
+                    <button type="button" class="btn btn-secondary btn-lg" style="margin-left: auto;"
+                        data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="sobreModalTrabalho" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>SOBRE O TRABALHO</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6><b>Info</b></h6>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <small style="margin-top: auto; text-align: center; text-align: justify;">
+                        <p>2019</p>
+                    </small>
+                    <button type="button" class="btn btn-secondary btn-lg" style="margin-left: auto;"
+                        data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script src="./js/jquery/jquery-3.4.1.min.js"></script>
+    <script src="./js/jquery/popper.min.js"></script>
+    <script src="./js/bootstrap/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.js"></script>
 </body>
 
-<!-- Include dos scripts -->
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 </html>
