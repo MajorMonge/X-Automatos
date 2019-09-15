@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trabalho de LFA - Gramática Regular</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/index-style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/grammar-style.css" />
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark no-select">
+        <a class="navbar-brand" href="#">
+            <span class="navbar-text">
+                <div data-icon="ei-gear" data-size="m"></div>
+                <p> Web LFA Machine</p>
+            </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="regex.html">Leitor de Expressões Regulares</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="grammar.html">Leitor de Gramática Regular</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="automatos.html">Automatos Finitos</a>
+                </li>
+            </ul>
+            <span class="navbar-text">
+                <a href="#" data-toggle="modal" data-target="#infoGrammar">
+                    <div data-icon="ei-exclamation" data-size="m"></div>
+                </a>
+            </span>
+        </div>
+    </nav>
+
+    <div id="main" class="container">
+        <!-- Editable table -->
+        <div class="card">
+            <h3 class="card-header text-center font-weight-bold text-uppercase py-4 no-select">Gramática Regular</h3>
+            <div class="card-body">
+                <div id="table" class="table-editable">
+                    <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                                class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+                    <table class="table table-bordered table-responsive-md table-striped text-center">
+                        <thead>
+                            <tr>
+                                <th class="text-center no-select">Terminais</th>
+                                <th class="text-center no-select">-></th>
+                                <th class="text-center no-select">Gramática</th>
+                                <td>
+                                    <span class="table-add"><button type="button"
+                                        class="btn btn-success btn-rounded btn-sm my-0"
+                                            onclick="addTable()">Adicionar</button></span>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody id="main-grammar-container" class="grammar-container">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Editable table -->
+        <div id="main-card-footer" class="card-footer">
+            <div class="forms-card-footer">
+                <form id="grammar-regex-form">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text no-select" id="inputGroup-sizing-default">Entrada</span>
+                        </div>
+                        <input type="text" class="form-control" id="RegexGrammar" aria-label="Default"
+                            aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </form>
+            </div>
+            <div id="buttons-main-card-footer" class="buttons-card-footer">
+                <button type="button" class="btn btn-secondary col-md-3 btn-sm" onclick="">Testar Entrada</button>
+                <button type="button" class="btn btn-primary col-md-3 btn-sm"
+                    data-toggle="modal" data-target="#multipleInputs">Múltiplas 
+                        Entradas</button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="multipleInputs" tabindex="-1" role="dialog" aria-labelledby="multipleInputs"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Teste para múltiplos inputs</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-div-strings">
+        
+                        </div>
+                        <p id="multiple-regex-grammar"></p>
+                        <div class="modal-div-paragraph">
+        
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary regex-modal-btn-close" data-dismiss="modal">Sair</button>
+                        <button type="button" class="btn btn-primary regex-modal-btn" onclick="adicionarInput()">Add
+                            inputs</button>
+                        <button type="button" class="btn btn-primary regex-modal-btn"
+                            onclick="multipleGrammarRegexinator()">Verificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="infoGrammar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>SOBRE A GRAMÁTICA</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Leitor de Gramática Regular, versão 0.5</p>
+                </div>
+                <div class="modal-footer">
+                    <small style="margin-top: auto; text-align: center; text-align: justify;">
+                        <p>2019</p>
+                    </small>
+                    <button type="button" class="btn btn-secondary btn-lg" style="margin-left: auto;"
+                        data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include dos scripts -->
+    <script src="./js/jquery/jquery-3.4.1.min.js"></script>
+    <script src="./js/jquery/popper.min.js"></script>
+    <script src="./js/bootstrap/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.js"></script>
+    <script src="./js/grammar.js"></script>
+</body>
+
+</html>
