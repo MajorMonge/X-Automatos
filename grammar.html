@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark no-select">
         <a class="navbar-brand" href="#">
             <span class="navbar-text">
                 <div data-icon="ei-gear" data-size="m"></div>
@@ -52,7 +52,7 @@
     <div id="main" class="container">
         <!-- Editable table -->
         <div class="card">
-            <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Gramática Regular</h3>
+            <h3 class="card-header text-center font-weight-bold text-uppercase py-4 no-select">Gramática Regular</h3>
             <div class="card-body">
                 <div id="table" class="table-editable">
                     <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
@@ -60,93 +60,73 @@
                     <table class="table table-bordered table-responsive-md table-striped text-center">
                         <thead>
                             <tr>
-                                <th class="text-center">Person Name</th>
-                                <th class="text-center">Age</th>
-                                <th class="text-center">Company Name</th>
-                                <th class="text-center">Country</th>
-                                <th class="text-center">City</th>
-                                <th class="text-center">Sort</th>
-                                <th class="text-center">Remove</th>
+                                <th class="text-center no-select">Terminais</th>
+                                <th class="text-center no-select">-></th>
+                                <th class="text-center no-select">Gramática</th>
+                                <td>
+                                    <span class="table-add"><button type="button"
+                                        class="btn btn-success btn-rounded btn-sm my-0"
+                                            onclick="addTable()">Adicionar</button></span>
+                                </td>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="pt-3-half" contenteditable="true">Aurelia Vega</td>
-                                <td class="pt-3-half" contenteditable="true">30</td>
-                                <td class="pt-3-half" contenteditable="true">Deepends</td>
-                                <td class="pt-3-half" contenteditable="true">Spain</td>
-                                <td class="pt-3-half" contenteditable="true">Madrid</td>
-                                <td class="pt-3-half">
-                                    <span class="table-up"><a href="#!" class="indigo-text"><i
-                                                class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
-                                    <span class="table-down"><a href="#!" class="indigo-text"><i
-                                                class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
-                                </td>
-                                <td>
-                                    <span class="table-remove"><button type="button"
-                                            class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
-                                </td>
-                            </tr>
-                            <!-- This is our clonable table line -->
-                            <tr>
-                                <td class="pt-3-half" contenteditable="true">Guerra Cortez</td>
-                                <td class="pt-3-half" contenteditable="true">45</td>
-                                <td class="pt-3-half" contenteditable="true">Insectus</td>
-                                <td class="pt-3-half" contenteditable="true">USA</td>
-                                <td class="pt-3-half" contenteditable="true">San Francisco</td>
-                                <td class="pt-3-half">
-                                    <span class="table-up"><a href="#!" class="indigo-text"><i
-                                                class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
-                                    <span class="table-down"><a href="#!" class="indigo-text"><i
-                                                class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
-                                </td>
-                                <td>
-                                    <span class="table-remove"><button type="button"
-                                            class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
-                                </td>
-                            </tr>
-                            <!-- This is our clonable table line -->
-                            <tr>
-                                <td class="pt-3-half" contenteditable="true">Guadalupe House</td>
-                                <td class="pt-3-half" contenteditable="true">26</td>
-                                <td class="pt-3-half" contenteditable="true">Isotronic</td>
-                                <td class="pt-3-half" contenteditable="true">Germany</td>
-                                <td class="pt-3-half" contenteditable="true">Frankfurt am Main</td>
-                                <td class="pt-3-half">
-                                    <span class="table-up"><a href="#!" class="indigo-text"><i
-                                                class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
-                                    <span class="table-down"><a href="#!" class="indigo-text"><i
-                                                class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
-                                </td>
-                                <td>
-                                    <span class="table-remove"><button type="button"
-                                            class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
-                                </td>
-                            </tr>
-                            <!-- This is our clonable table line -->
-                            <tr class="hide">
-                                <td class="pt-3-half" contenteditable="true">Elisa Gallagher</td>
-                                <td class="pt-3-half" contenteditable="true">31</td>
-                                <td class="pt-3-half" contenteditable="true">Portica</td>
-                                <td class="pt-3-half" contenteditable="true">United Kingdom</td>
-                                <td class="pt-3-half" contenteditable="true">London</td>
-                                <td class="pt-3-half">
-                                    <span class="table-up"><a href="#!" class="indigo-text"><i
-                                                class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
-                                    <span class="table-down"><a href="#!" class="indigo-text"><i
-                                                class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
-                                </td>
-                                <td>
-                                    <span class="table-remove"><button type="button"
-                                            class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
-                                </td>
-                            </tr>
+                        <tbody id="main-grammar-container" class="grammar-container">
+                            
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <!-- Editable table -->
+        <div id="main-card-footer" class="card-footer">
+            <div class="forms-card-footer">
+                <form id="grammar-regex-form">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text no-select" id="inputGroup-sizing-default">Entrada</span>
+                        </div>
+                        <input type="text" class="form-control" id="RegexGrammar" aria-label="Default"
+                            aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </form>
+            </div>
+            <div id="buttons-main-card-footer" class="buttons-card-footer">
+                <button type="button" class="btn btn-secondary col-md-3 btn-sm" onclick="">Testar Entrada</button>
+                <button type="button" class="btn btn-primary col-md-3 btn-sm"
+                    data-toggle="modal" data-target="#multipleInputs">Múltiplas 
+                        Entradas</button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="multipleInputs" tabindex="-1" role="dialog" aria-labelledby="multipleInputs"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Teste para múltiplos inputs</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-div-strings">
+        
+                        </div>
+                        <p id="multiple-regex-grammar"></p>
+                        <div class="modal-div-paragraph">
+        
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary regex-modal-btn-close" data-dismiss="modal">Sair</button>
+                        <button type="button" class="btn btn-primary regex-modal-btn" onclick="adicionarInput()">Add
+                            inputs</button>
+                        <button type="button" class="btn btn-primary regex-modal-btn"
+                            onclick="multipleGrammarRegexinator()">Verificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -161,7 +141,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Leitor de Gramática Regular, versão 0.1</p>
+                    <p>Leitor de Gramática Regular, versão 0.5</p>
                 </div>
                 <div class="modal-footer">
                     <small style="margin-top: auto; text-align: center; text-align: justify;">
@@ -179,7 +159,6 @@
     <script src="./js/jquery/popper.min.js"></script>
     <script src="./js/bootstrap/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.js"></script>
-    <script src="./js/regex.js"></script>
     <script src="./js/grammar.js"></script>
 </body>
 
