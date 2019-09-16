@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="./css/bootstrap/bootstrap.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="./css/index-style.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="./vis/vis.css" />
 </head>
 
 <body>
@@ -52,24 +51,24 @@
         <div id="mynetwork"></div>
     </div>
     <div id="editor" class="">
-        <a id="manipular" href="javascript:setModo(0);" class="btn btn-secondary">
+        <a id="manipular" href="#" class="btn btn-secondary">
             <div data-icon="ei-pointer"></div>
         </a>
-        <a id="adicionar" href="javascript:setModo(1);" class="btn btn-secondary">
+        <a id="adicionar" href="#" class="btn btn-secondary">
             <div data-icon="ei-plus"></div>
         </a>
-        <a id="aresta" href="javascript:setModo(2);" class="btn btn-secondary">
+        <a id="aresta" href="#" class="btn btn-secondary">
             <div data-icon="ei-share-google"></div>
         </a>
-        <a id="editar" href="javascript:setModo(3);" class="btn btn-secondary">
+        <a id="editar" href="#" class="btn btn-secondary">
             <div data-icon="ei-pencil"></div>
         </a>
-        <a id="manipular" href="javascript:setModo(4);" class="btn btn-secondary">
+        <a id="excluir" href="#" class="btn btn-secondary">
             <div data-icon="ei-trash"></div>
         </a>
     </div>
-    <div class="modal fade no-select" id="sobreModalTrabalho" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-        aria-hidden="true">
+    <div class="modal fade no-select" id="sobreModalTrabalho" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -92,11 +91,16 @@
         </div>
     </div>
 
+    <ul class='custom-menu'>
+        <li id="inicial" data-action="first">Inicial</li>
+        <li id="final"  data-action="second">Final</li>
+    </ul>
+
     <script src="./js/jquery/jquery-3.4.1.min.js"></script>
     <script src="./js/jquery/popper.min.js"></script>
     <script src="./js/bootstrap/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.js"></script>
-    <script src="./vis/vis.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.9.2/cytoscape.min.js" integrity="sha256-/9/zZEd/HVvoKFJ826QwJv6XruSCLbMvgIxA3ohKmVo=" crossorigin="anonymous"></script>
     <script src="./js/automatos.js"></script>
 
 </body>
