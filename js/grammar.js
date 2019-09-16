@@ -1,6 +1,18 @@
+//Variáveis globais
+// Variáveis constantes para as tableas
 const $tableID = $('#table');
 const $BTN = $('#export-btn');
 const $EXPORT = $('#export');
+// Criando vetores de objetos
+var patt = [];
+var str = [];
+var grammar = [];
+// Contadores para o vetor de objetos
+var counter_multiple_inputs = 0;
+var table_count = 0;
+var str_count = 0;
+var patt_count = 0;
+var grammar_count = 0;
 
 // JQuery perguntando se deseja sair, mesmo com coisas não salvas
 $(document).ready(function(){
@@ -16,34 +28,6 @@ $(document).ready(function(){
             return 'Tem certeza que deseja sair?'
     }
 })
-
-const newTr = `
-<tr class="hide">
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half">
-    <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
-    <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
-  </td>
-  <td>
-    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
-  </td>
-</tr>`;
-
-$('.table-add').on('click', 'i', () => {
-
-    const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
-
-    if ($tableID.find('tbody tr').length === 0) {
-
-        $('tbody').append(newTr);
-    }
-
-    $tableID.find('table').append($clone);
-});
 
 $tableID.on('click', '.table-remove', function () {
 
@@ -100,3 +84,94 @@ $BTN.on('click', () => {
     // Output the result
     $EXPORT.text(JSON.stringify(data));
 });
+
+function decreaseCounter() {
+    if (table_count < 0)
+        table_count = 0;
+
+    table_count--;
+}
+
+function addTable() {
+    let table = `
+                <tr id="table${table_count}">
+                    <td id="Terminal${table_count}" class="pt-3-half" contenteditable="true"></td>
+                    <td id="arrow${table_count}" class="pt-3-half disable_td no-select">-></td>
+                    <td id="Grammar${table_count}" class="pt-3-half" contenteditable="true"></td>
+                    <td>
+                        <span class="table-remove"><button type="button"
+                            class="btn btn-danger btn-rounded btn-sm my-0" onclick="decreaseCounter()">Remover</button></span>
+                    </td>
+                </tr>
+                `;
+    $('#main-grammar-container').append(table);
+    table_count = table_count + 1;
+}
+
+function addStringObj(str) {
+    if(str != undefined && str != ""){
+        str[i] = str;
+    } else {
+        alert("Objeto vazio");
+    }
+}
+
+function createStringObj(){
+    let str = {
+
+    }
+}
+
+function grammarAnalyser(){
+
+}
+
+function adicionarInput() {
+    counter_multiple_inputs += 1;
+    $('.modal-div-strings').append(`
+    
+    <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text no-select" id="inputGroup-sizing-default">Entrada ${counter_multiple_inputs} </span>
+        </div>
+        <input type="text" class="form-control" id="RegexString${counter_multiple_inputs}" aria-label="Default"
+            aria-describedby="inputGroup-sizing-default">
+    </div>
+    `);
+}
+
+function multipleGrammarRegexinator() {
+    let local_groups = new Array();
+    let parenteses = "()";
+
+    let str = new Array();
+
+    for (let i = 1; i <= counter_multiple_inputs; i++) {
+        str[i] = document.getElementById('RegexString' + i).value;
+    }
+
+    let patt = document.getElementById('RegexGrammarModal').value;
+    // let patt = /patt1/i;
+    let auxiliar_patt = "Gramática: " + patt;
+    let result;
+
+    if (patt == "" || patt == null || patt == undefined) {
+        document.getElementById('multiple-regex-grammar').innerHTML = 'Gramática não inserida, não pode analizar null';
+    } else {
+        for (let j = 1; j <= counter_multiple_inputs; j++) {
+            if (patt == "" || str == "") {
+
+            } else if (result = str[j].match(patt)) {
+                $('#RegexString' + j).html(result);
+                $('#RegexString' + j).css('background-color', '#17ff4d66')
+
+            } else {
+                $('#RegexString' + j).html(result);
+                $('#RegexString' + j).css('background-color', 'rgba(255, 23, 23, 0.4)')
+
+            }
+        }
+    }
+
+}
+
