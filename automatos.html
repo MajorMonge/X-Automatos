@@ -91,16 +91,60 @@
         </div>
     </div>
 
+
+    <div class="float-panel float-left">
+        <div class="card">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                        aria-controls="home" aria-selected="true">Entrada</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                        aria-controls="profile" aria-selected="false">Passo-a-passo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                        aria-controls="contact" aria-selected="false">Multiplas Entradas</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <form id="single-form">
+                        <div class="row">
+                            <div class="col-md-12   ">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text no-select"
+                                            id="inputGroup-sizing-default">Entrada</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="single-entrada" aria-label="Default"
+                                        aria-describedby="inputGroup-sizing-default">
+                                </div>
+
+                                <button id="verificarSingle" type="button" class="btn btn-primary">Verificar</button>
+                                    <h6 id="resultadoSingle"></h6>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+            </div>
+        </div>
+    </div>
+
     <ul class='custom-menu'>
         <li id="inicial" data-action="first">Inicial</li>
-        <li id="final"  data-action="second">Final</li>
+        <li id="final" data-action="second">Final</li>
     </ul>
 
     <script src="./js/jquery/jquery-3.4.1.min.js"></script>
     <script src="./js/jquery/popper.min.js"></script>
     <script src="./js/bootstrap/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.9.2/cytoscape.min.js" integrity="sha256-/9/zZEd/HVvoKFJ826QwJv6XruSCLbMvgIxA3ohKmVo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.9.2/cytoscape.min.js"
+        integrity="sha256-/9/zZEd/HVvoKFJ826QwJv6XruSCLbMvgIxA3ohKmVo=" crossorigin="anonymous"></script>
     <script src="./js/automatos.js"></script>
 
 </body>

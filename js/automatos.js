@@ -75,7 +75,7 @@ let modoEdicao;
 /* INICIALIZAÇÃO */
 $(document).ready(function () {
   $('#manipular').click();
-  console.log(cy.nodes());
+  //console.log(cy.nodes());
 });
 
 /* MENUS */
@@ -83,7 +83,7 @@ $('#editor a').on('click', function (e) {
   $(this).parent().find('a.active').removeClass('active');
   $(this).addClass('active');
   modoEdicao = $(this).attr("id");
-  console.log(modoEdicao);
+  ////console.log(modoEdicao);
   if (modoEdicao == 'aresta') {
     cy.nodes().ungrabify();
   } else {
@@ -97,7 +97,7 @@ $('#editor a').on('click', function (e) {
 cy.on('tap', function (event) {
   if (modoEdicao == "adicionar") {
     cy.add([{
-      data: { label: `q${cy.nodes().length}`, initial: false, final: false },
+      data: { label: `q${cy.nodes().length}`, initial: false, final: false, link: [] },
       renderedPosition: {
         x: event.renderedPosition.x,
         y: event.renderedPosition.y,
@@ -125,7 +125,7 @@ cy.on('tap', 'node', function (event) {
       node.data().label = name;
     }
   } else {
-    console.log(event.renderedPosition.x, event.renderedPosition.y)
+    //console.log(event.renderedPosition.x, event.renderedPosition.y)
     event.preventDefault();
     $(".custom-menu").finish().toggle(100);
     $(".custom-menu").css({
@@ -133,7 +133,7 @@ cy.on('tap', 'node', function (event) {
       top: event.renderedPosition.y + "px"
     });
     $(".custom-menu").data("nodo", { id: event.target.id() });
-    console.log("Data: " + $(".custom-menu").data("nodo").id);
+    //console.log("Data: " + $(".custom-menu").data("nodo").id);
     if (node.data().initial) {
       $("#inicial").text("Inicial ✓");
     } else {
@@ -169,6 +169,8 @@ cy.on('mousedown', 'node', function (event) {
       cy.add([{
         group: 'edges', data: { source: firstNode.data().id, target: secondNode.data().id, label: name }
       }]);
+      let elem = cy.getElementById(firstNode.data().id);
+      elem.data().link.push({ value: name, target: secondNode });
     }
   }
 });
@@ -220,7 +222,6 @@ $("#inicial").on("click", function (event) {
   styleNode(node, '#' + $(".custom-menu").data("nodo").id)
 })
 
-
 $("#final").on("click", function (event) {
   var node = cy.$('#' + $(".custom-menu").data("nodo").id);
   if (!node.data().final) {
@@ -233,7 +234,6 @@ $("#final").on("click", function (event) {
   styleNode(node, '#' + $(".custom-menu").data("nodo").id)
 })
 
-
 function styleNode(ref, node) {
   if (ref.data().final && ref.data().initial) {
     cy.$(node).classes('bothnode');
@@ -244,4 +244,42 @@ function styleNode(ref, node) {
   } else if (ref.data().initial) {
     cy.$(node).classes('initialnode');
   }
+}
+
+/* LÓGICA */
+$("#verificarSingle").click(function () {
+  let entrada = $("#single-entrada").val();
+  let inicial;
+  if (entrada != "" && entrada != null) {
+    ////console.log(entrada);
+    cy.nodes().forEach(function (ele) { // Your function call inside
+      ////console.log("loop", ele.data(), ele.data().initial);
+      if (ele.data().initial)
+        inicial = ele.data();
+    });
+
+    ////console.log(inicial);
+    $("#resultadoSingle").text(resultAutomato(entrada, inicial, 0));
+  }
+})
+
+function resultAutomato(entrada, node, indice) {
+  let result = false;
+
+  for (let x = 0; x < node.link.length; x++) {
+    if (node.link[x].value == entrada[indice]) {
+      if (node.link[x].target.data().final == true && indice == entrada.length - 1) {
+        result = true;
+        break;
+      } else if (indice != entrada.length) {
+        result = resultAutomato(entrada, node.link[x].target.data(), indice += 1);
+        break;
+      } else {
+        result = false;
+      }
+    } else {
+      result = false;
+    }
+  }
+  return result;
 }
