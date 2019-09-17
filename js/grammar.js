@@ -121,40 +121,91 @@ function isLowerCase(str) {
 /* LÓGICA DE VERIFICAÇÃO */
 
 $("#btn-verify").click(function () {
-    grammar = createGrammarObj();
-    grammarAnalyser(grammar);
+    let trees = createGrammarTree();
 })
 
+
+
 //CRIAR OBJETO
-function createGrammarObj() {
+function createGrammarTree() {
+    let trees = [];
     let tempgrammar = [];
+    let final_string = [];
+
     for (let i = 0; i < table_count; i++) {
-        //console.log($(#Terminal${i}).text());
-        let string = $(`#Grammar${i}`).text();
-        let terminal, variavel;
-        if (isLowerCase(string[0])) {
-            terminal = string[0]
-            if (string[1] != undefined) {
-                variavel = string[1]
-            } else {
-                variavel = null;
-            }
-        } else if (!isLowerCase(string[0])) {
-            terminal = null;
-            variavel = string[0];
-        }
         tempgrammar.push(
             {
                 indice: $(`#Terminal${i}`).text(),
-                terminal: terminal,
-                variavel: variavel,
-                posicao: i,
-                flag: false
+                terminal: $(`#Grammar${i}`).text()[0],
+                variavel: $(`#Grammar${i}`).text()[1],
             }
         );
     }
-    console.log(tempgrammar);
-    return tempgrammar;
+    //FORMAR NODOS
+    tempgrammar.forEach((element, index) => {
+        let contain = false;
+        trees.forEach((node) => {
+            if (node.indice == element.indice)
+                contain = true;
+        })
+        if (!contain) {
+            trees.push({ indice: element.indice, filhos: [] });
+        }
+    })// S A B
+    // S -> aA
+    // A -> bB
+    // B -> c
+    //FORMOU OBJETOS: [{indice: S, terminal: a, variavel: A}, {indice: A, terminal: b, variavel: B }, {indice: B, terminal:c, variavel: null}]
+    //FORMOU NODOS: S A B
+
+    /* ✓ X
+                ELEMENT1[S,a,A]» N0[S]
+                       IF(N0.indice == ELEMENT1.indice && ELEMENT1.terminal != null){
+                                    X N0.indice é igual, mas terminal não é nulo
+                       }ELSE IF (N0.indice == ELEMENT1.indice){
+                                        SN0[S] 
+                            SN0.indice é igual a ELEMENT1.variavel? | X
+                                        SN1[A] 
+                            SN1.indice é igual a ELEMENT1.variavel? | ✓
+                                -> NO[S, [{a, SN1=N1}]]
+                                        SN1[B] 
+                            SN2.indice é igual a ELEMENT1.variavel? | X
+                       }
+                      N1[A]
+                            IF(N1.indice == ELEMENT1.indice && ELEMENT1.terminal != null){
+                                    X N1.indice é diferente 
+                              }ELSE IF (N1.indice == ELEMENT1.indice){
+                            X N1.indice é diferente 
+                        }
+                      N2[B]
+                            IF(N2.indice == ELEMENT1.indice && ELEMENT1.terminal != null){
+                                    X N2.indice é diferente 
+                              }ELSE IF (N1.indice == ELEMENT1.indice){
+                            X N2.indice é diferente 
+                        }
+                        
+                     FIM RESULTA EM: N0[S, [{a, N1}]] 
+      ELEMENT2[A,b,B]» N0[S]
+                          
+                     
+               
+    */
+    tempgrammar.forEach((element, index) => {
+        trees.forEach((node) => {
+            if (node.indice == element.indice && element.variavel == null) {
+                node.filhos.push({ terminal: element.terminal, variavel: null });
+            } else if (node.indice == element.indice) {
+                trees.forEach((subnode) => {
+                    if (subnode.indice == element.variavel) {
+                        node.filhos.push({ terminal: element.terminal, variavel: subnode });
+                    }
+                })
+            }
+        })
+    })
+
+    console.log(trees);
+    return trees;
 }
 
 //PREPARA PRA ANALISAR
@@ -176,7 +227,7 @@ function grammarAnalyser(grammarObj) {
     alert(grammarAnalyserRec(grammarObj, expressao_usuario, grammarObj[0].indice, 0));
 }
 
-
+let contador = 0;
 //ALGORITIMO DE ANALISE
 function grammarAnalyserRec(grammar, entrada_usuario, variavel_atual, contador_entrada) {
     //ITERAÇÃO
@@ -184,7 +235,26 @@ function grammarAnalyserRec(grammar, entrada_usuario, variavel_atual, contador_e
     //S -> aA		| 1a: flag false; 
     //A -> vazio	| 1a: flag false
     //Entrada: a
-    
+
+    if (grammar[contador].indice == variavel_atual && grammar[contador].flag == false) {
+        console.log(grammar[contador].indice);
+        console.log(contador);
+        if (entrada_usuario[contador_entrada] == grammar[contador].terminal) {
+            contador_entrada++;
+            contador++;
+            grammar[contador].flag = true;
+            console.log(grammar);
+            console.log(entrada_usuario);
+            console.log(grammar[contador].indice);
+            console.log(contador_entrada);
+            grammarAnalyserRec(grammar, entrada_usuario, grammar[contador].indice, contador_entrada);
+        } else {
+            contador++;
+            grammarAnalyserRec(grammar, entrada_usuario, grammar[contador].indice, contador_entrada);
+        }
+    }
+
+    return contador_entrada;
 }
 
 
