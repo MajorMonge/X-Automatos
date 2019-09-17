@@ -1,179 +1,247 @@
+/* CYTOSCAPE */
+var cy = cytoscape({
+  container: $('#mynetwork'),
+  elements: [],
+
+  style: [ // the stylesheet for the graph
+    {
+      selector: 'node',
+      style: {
+        'border-width': 4,
+        'border-style': 'solid',
+        'border-color': '#fcba03',
+        'background-color': '#fcd303',
+        'text-margin-y': +20,
+        'label': 'data(label)'
+      }
+    },
+
+    {
+      selector: '.initialnode',
+      style: {
+        'border-width': 4,
+        'border-style': 'solid',
+        'border-color': '#fcba03',
+        'background-color': '#ffffff',
+        'text-margin-y': +20,
+        'label': 'data(label)'
+      }
+    },
+    {
+      selector: '.finalnode',
+      style: {
+        'border-width': 4,
+        'border-style': 'solid',
+        'border-color': '#ca59ff',
+        'background-color': '#fcd303',
+        'text-margin-y': +20,
+        'label': 'data(label)'
+      }
+    },
+    {
+      selector: '.bothnode',
+      style: {
+        'border-width': 4,
+        'border-style': 'solid',
+        'border-color': '#ca59ff',
+        'background-color': '#ffffff',
+        'text-margin-y': +20,
+        'label': 'data(label)'
+      }
+    },
+    {
+      selector: 'edge',
+      style: {
+        'width': 3,
+        'line-color': '#2e2e2e',
+        'curve-style': 'bezier',
+        'target-arrow-color': '#2e2e2e',
+        'target-arrow-shape': 'triangle',
+        'text-margin-y': -10,
+        'label': 'data(label)'
+      }
+    }
+  ],
+
+  layout: {
+    name: 'grid',
+    rows: 1
+  }
+});
+
+/* VARIÁVEIS */
+let modoEdicao;
+
+/* INICIALIZAÇÃO */
 $(document).ready(function () {
-  $("#manipular").focus();
+  $('#manipular').click();
+  console.log(cy.nodes());
+});
+
+/* MENUS */
+$('#editor a').on('click', function (e) {
+  $(this).parent().find('a.active').removeClass('active');
+  $(this).addClass('active');
+  modoEdicao = $(this).attr("id");
+  console.log(modoEdicao);
+  if (modoEdicao == 'aresta') {
+    cy.nodes().ungrabify();
+  } else {
+    cy.nodes().grabify();
+  }
+});
+
+
+/* EVENTOS */
+/* Adicionar Nó */
+cy.on('tap', function (event) {
+  if (modoEdicao == "adicionar") {
+    cy.add([{
+      data: { label: `q${cy.nodes().length}`, initial: false, final: false },
+      renderedPosition: {
+        x: event.renderedPosition.x,
+        y: event.renderedPosition.y,
+      },
+    }]);
+  } else {
+    $(".custom-menu").slideUp(100);
+  }
+});
+
+/* Remover e Editar Nó */
+cy.on('tap', 'node', function (event) {
+  var node = cy.$('#' + event.target.id());
+  if (modoEdicao == "excluir") {
+    cy.remove(node);
+  } else if (modoEdicao == "editar") {
+    let name = prompt("Digite o valor a ser atualizado:");
+    if (name !== null) {
+      if (name == "") {
+        name = "λ"
+      }
+      else {
+        name = name;
+      }
+      node.data().label = name;
+    }
+  } else {
+    console.log(event.renderedPosition.x, event.renderedPosition.y)
+    event.preventDefault();
+    $(".custom-menu").finish().toggle(100);
+    $(".custom-menu").css({
+      left: event.renderedPosition.x + "px",
+      top: event.renderedPosition.y + "px"
+    });
+    $(".custom-menu").data("nodo", { id: event.target.id() });
+    console.log("Data: " + $(".custom-menu").data("nodo").id);
+    if (node.data().initial) {
+      $("#inicial").text("Inicial ✓");
+    } else {
+      $("#inicial").text("Inicial");
+    }
+
+    if (node.data().final) {
+      $("#final").text("Final ✓");
+    } else {
+      $("#final").text("Final");
+    }
+  }
+});
+
+/* Adicionar Aresta */
+let firstNode, secondNode;
+cy.on('mousedown', 'node', function (event) {
+  event.stopPropagation()
+  firstNode = cy.$('#' + event.target.id());
+}).on('mouseup', 'node', function (event) {
+  event.stopPropagation()
+  if (modoEdicao == "aresta") {
+    secondNode = cy.$('#' + event.target.id());
+    let name = prompt("Digite o valor da transição");
+    if (name !== null) {
+      if (name == "") {
+        name = "λ"
+      }
+      else {
+        name = name;
+      }
+
+      cy.add([{
+        group: 'edges', data: { source: firstNode.data().id, target: secondNode.data().id, label: name }
+      }]);
+    }
+  }
+});
+
+
+/* Remover e Editar Aresta */
+cy.on('tap', 'edge', function (event) {
+  var edge = cy.$('#' + event.target.id());
+  if (modoEdicao == "excluir") {
+    cy.remove(edge);
+  } else if (modoEdicao == "editar") {
+    let name = prompt("Digite o valor a ser atualizado:");
+    if (name !== null) {
+      if (name == "") {
+        name = "λ"
+      }
+      else {
+        name = name;
+      }
+      edge.data().label = name;
+    }
+  }
+});
+
+$("#inicial").on("click", function (event) {
+  var node = cy.$('#' + $(".custom-menu").data("nodo").id);
+  if (!node.data().initial) {
+
+    let initialNodesWBoth = cy.filter('.bothnode');
+    let initialNodes = cy.filter('.initialnode');
+    if (initialNodesWBoth.data() != undefined) {
+      initialNodesWBoth.data().initial = false;
+      styleNode(initialNodesWBoth, '#' + initialNodesWBoth.data().id);
+    }
+    if (initialNodes.data() != undefined) {
+      initialNodes.data().initial = false;
+      styleNode(initialNodes, '#' + initialNodes.data().id);
+    }
+
+
+    node.data().initial = true;
+    $("#inicial").text("Inicial ✓");
+
+
+  } else {
+    node.data().initial = false;
+    $("#inicial").text("Inicial");
+  }
+  styleNode(node, '#' + $(".custom-menu").data("nodo").id)
 })
-let menuModo;
-function setModo(modo) {
-  switch (modo) {
-    case 0:
-      menuModo = 0;
-      options = {
-        manipulation: {
-          enabled: true
-        }
-      };
-      network.disableEditMode();
-      network.setOptions(options);
-      break;
-    case 1:
-      menuModo = 1;
-      options = {
-        manipulation: {
-          enabled: false,
-          addNode: function (data, callback) {
-            console.log(data);
-            let name = prompt("Digite o nome do nodo");
-            if (name == null)
-              return;
-            else if (name == "")
-              data.label = "q" + nodes.length;
-            else
-              data.label = name;
-            callback(data);
-            setModo(1);
-          },
-        }
-      };
-      network.setOptions(options);
-      network.addNodeMode();
-      break;
-    case 2:
-      menuModo = 2;
-      options = {
-        manipulation: {
-          enabled: false,
-          addEdge: function (data, callback) {
-            console.log(data);
-            let name = prompt("Digite o valor da transição");
-            if (name !== null) {
-              if (name == "") {
-                data.label = "λ"
-              }
-              else {
-                data.label = name;
-              }
-              callback(data);
-              setModo(2);
-              network.addEdgeMode();
-            }
-          },
-        }
-      };
-      network.setOptions(options);
-      network.addEdgeMode();
-      break;
-    case 3:
-      menuModo = 3;
-      network.disableEditMode();
-      options = {
-        manipulation: {
-          enabled: true,
-        }
-      };
-      network.setOptions(options);
-      network.on("click", function (param) {
-        console.log(param)
-        if (param.edges.length == 1 && menuModo == 3) {
-          name = prompt("Digite o valor para atualizar a transição");
-          if (name !== null) {
-            edges.update({ id: param.edges[0], label: name });
-          }
-        }
-      });
-      break;
-    case 4:
-      menuModo = 4;
-      network.disableEditMode();
-      options = {
-        manipulation: {
-          enabled: true,
-        }
-      };
-      network.setOptions(options);
-      network.on("click", function (param) {
-        if(menuModo == 4){
-          network.deleteSelected();
-        }
-      });
-      break;
+
+
+$("#final").on("click", function (event) {
+  var node = cy.$('#' + $(".custom-menu").data("nodo").id);
+  if (!node.data().final) {
+    node.data().final = true;
+    $("#final").text("Final ✓");
+  } else {
+    node.data().final = false;
+    $("#final").text("Final");
+  }
+  styleNode(node, '#' + $(".custom-menu").data("nodo").id)
+})
+
+
+function styleNode(ref, node) {
+  if (ref.data().final && ref.data().initial) {
+    cy.$(node).classes('bothnode');
+  } else if (!ref.data().final && !ref.data().initial) {
+    cy.$(node).classes('node');
+  } else if (ref.data().final) {
+    cy.$(node).classes('finalnode');
+  } else if (ref.data().initial) {
+    cy.$(node).classes('initialnode');
   }
 }
-
-
-let estados = [
-];
-
-let transicoes = [
-];
-
-var nodes = new vis.DataSet(estados);
-
-// create an array with edges
-var edges = new vis.DataSet(transicoes);
-
-// create a network
-var container = document.getElementById('mynetwork');
-var data = {
-  nodes: nodes,
-  edges: edges
-};
-var options = {
-  nodes: {
-    color: {
-      border: '#c3c900',
-      background: '#f7ff00',
-      highlight: {
-        border: '#2B7CE9',
-        background: '#D2E5FF'
-      },
-      hover: {
-        border: '#2B7CE9',
-        background: '#D2E5FF'
-      }
-    },
-    shape: 'circle',
-
-    widthConstraint: 50,
-  },
-  edges: {
-    smooth: {
-      roundness: 0.5,
-      forceDirection: "none",
-      type: "discrete",
-    },
-    arrows: {
-      to: { enabled: true, scaleFactor: 1, type: 'arrow' },
-      middle: { enabled: false, scaleFactor: 1, type: 'arrow' },
-      from: { enabled: false, scaleFactor: 1, type: 'arrow' }
-    },
-    arrowStrikethrough: true,
-    chosen: true,
-    color: {
-      color: '#c3c900',
-      highlight: '#2B7CE9',
-      hover: '#2B7CE9',
-      inherit: 'from',
-      opacity: 1.0
-    },
-    hoverWidth: 1,
-    scaling: {
-      label: {
-        drawThreshold: 5
-      }
-    },
-    font: {
-      color: '#343434',
-      size: 14, // px
-      face: 'arial',
-      align: 'horizontal',
-      vadjust: -10,
-    },
-    selfReferenceSize: 50,
-    width: 1,
-    length: 35,
-  }, interaction: {
-    selectConnectedEdges: false,
-  },
-  physics: false,
-};
-
-var network = new vis.Network(container, data, options);

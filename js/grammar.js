@@ -15,29 +15,26 @@ var patt_count = 0;
 var grammar_count = 0;
 
 // JQuery perguntando se deseja sair, mesmo com coisas não salvas
-$(document).ready(function(){
+$(document).ready(function () {
     var form = $('#meu-form-id'),
         original = form.serialize()
 
-    form.submit(function(){
+    form.submit(function () {
         window.onbeforeunload = null
     })
 
-    window.onbeforeunload = function(){
+    window.onbeforeunload = function () {
         if (form.serialize() != original)
             return 'Tem certeza que deseja sair?'
     }
 })
 
 $tableID.on('click', '.table-remove', function () {
-
     $(this).parents('tr').detach();
 });
 
 $tableID.on('click', '.table-up', function () {
-
     const $row = $(this).parents('tr');
-
     if ($row.index() === 1) {
         return;
     }
@@ -109,22 +106,88 @@ function addTable() {
 }
 
 function addStringObj(str) {
-    if(str != undefined && str != ""){
+    if (str != undefined && str != "") {
         str[i] = str;
     } else {
         alert("Objeto vazio");
     }
 }
 
-function createStringObj(){
-    let str = {
+function isLowerCase(str) {
+    return str == str.toLowerCase() && str != str.toUpperCase();
+}
 
+
+/* LÓGICA DE VERIFICAÇÃO */
+
+$("#btn-verify").click(function () {
+    grammar = createGrammarObj();
+    grammarAnalyser(grammar);
+})
+
+//CRIAR OBJETO
+function createGrammarObj() {
+    let tempgrammar = [];
+    for (let i = 0; i < table_count; i++) {
+        //console.log($(#Terminal${i}).text());
+        let string = $(`#Grammar${i}`).text();
+        let terminal, variavel;
+        if (isLowerCase(string[0])) {
+            terminal = string[0]
+            if (string[1] != undefined) {
+                variavel = string[1]
+            } else {
+                variavel = null;
+            }
+        } else if (!isLowerCase(string[0])) {
+            terminal = null;
+            variavel = string[0];
+        }
+        tempgrammar.push(
+            {
+                indice: $(`#Terminal${i}`).text(),
+                terminal: terminal,
+                variavel: variavel,
+                posicao: i,
+                flag: false
+            }
+        );
     }
+    console.log(tempgrammar);
+    return tempgrammar;
 }
 
-function grammarAnalyser(){
-
+//PREPARA PRA ANALISAR
+function grammarAnalyser(grammarObj) {
+    let indice = "";
+    let expressao = "";
+    let expressao_usuario = $('#Expression').val();
+    let contador_expressao_usuario = 0;
+    let contador = 0;
+    /*for(let i = 0; i < grammar_tree.length; i++) {
+        indice = grammar_tree[i].indice;
+        if(indice == grammar_tree[i].indice) {
+            let j = 0;
+            expressao += grammar_tree[i].string[j];
+        } 
+    //console.log(expressao);
+    }
+    */
+    alert(grammarAnalyserRec(grammarObj, expressao_usuario, grammarObj[0].indice, 0));
 }
+
+
+//ALGORITIMO DE ANALISE
+function grammarAnalyserRec(grammar, entrada_usuario, variavel_atual, contador_entrada) {
+    //ITERAÇÃO
+    //S -> b		| 1a: flag false; 
+    //S -> aA		| 1a: flag false; 
+    //A -> vazio	| 1a: flag false
+    //Entrada: a
+    
+}
+
+
 
 function adicionarInput() {
     counter_multiple_inputs += 1;
@@ -172,6 +235,5 @@ function multipleGrammarRegexinator() {
             }
         }
     }
-
 }
 
