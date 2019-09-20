@@ -41,12 +41,12 @@ function Regexinator() {
         result = "A entrada " + str + " corresponde a expressão";
         $('#result-regex-title').html(title);
         $('#result-regex').html(result);
-        $('#RegexString').css('background-color', '#17ff4d66')
+        $('#RegexString').css('background-color', '#17ff4d66');
     } else {
         result = "A entrada NÃO corresponde a expressão";
         document.getElementById('result-regex-title').innerHTML = title;
         document.getElementById('result-regex').innerHTML = result;
-        $('#RegexString').css('background-color', 'rgba(255, 23, 23, 0.4)')
+        $('#RegexString').css('background-color', 'rgba(255, 23, 23, 0.4)');
     }
 }
 function adicionarInput() {

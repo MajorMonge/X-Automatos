@@ -52,7 +52,7 @@
     <div id="main" class="container">
         <!-- Editable table -->
         <div class="card">
-            <h3 class="card-header text-center font-weight-bold text-uppercase py-4 no-select">Gramática Regular GLUD</h3>
+            <h3 class="card-header text-center font-weight-bold text-uppercase py-4 no-select">Gramática Regular</h3>
             <div class="card-body">
                 <div id="table" class="table-editable">
                     <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
@@ -96,6 +96,8 @@
                 <button type="button" class="btn btn-primary col-md-3 btn-sm"
                     data-toggle="modal" data-target="#multipleInputs">Múltiplas 
                         Entradas</button>
+                <button type="button" class="btn btn-warning col-md-3 btn-sm" data-toggle="modal" 
+                    data-target="#help">Ajuda</button>
             </div>
         </div>
 
@@ -142,7 +144,48 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Leitor de Gramática Regular, versão 0.5</p>
+                    <p>Leitor de Gramática Regular, versão 0.9</p>
+                    <br>
+                    <p>Este simulador utiliza GLUD ( Gramática Linear Unitária a Direita)</p>
+                </div>
+                <div class="modal-footer">
+                    <small style="margin-top: auto; text-align: center; text-align: justify;">
+                        <p>2019</p>
+                    </small>
+                    <button type="button" class="btn btn-secondary btn-lg" style="margin-left: auto;"
+                        data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>COMO UTILIZAR</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Leitor de Gramática Regular, versão 0.9</p>
+                    <br>
+                    <p>
+                        Nesta parte do projeto foi desenvolvida utilizando a lógica da GLUD, portanto, outras lógicas não
+                        se aplicam.
+                    </p>
+                    <br>
+                    <p>
+                        Para adicionar uma nova linha, cliquem em "Adicionar", a linha vira preenchida por padrão<br>
+                        como S -> λ, você já pode editar por padão as partes da tabelas. Escreva a gramática<br>
+                        como bem entender para testa-la,logo após digitar sua entrada no campo de entrada e clicar<br>
+                        em "Testar Entrada", para mais de uma entrada, clicar em "Múltiplas Entradas". nás múltiplas<br>
+                        entradas é necessário clicar em "Add inputs" para gerar o campo de entrada, quando achar<br>
+                        que tem entradas suficientes, é só testa-las.
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <small style="margin-top: auto; text-align: center; text-align: justify;">

@@ -24,12 +24,16 @@ body {
     border-radius: 99px;
 }
 
-.no-select{
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none;   /* Chrome 6.0+, Safari 3.1+, Edge & Opera 15+ */
-    -moz-user-select: none;      /* Firefox */
-    -ms-user-select: none;       /* IE 10+ and Edge */
-    user-select: none;           
+.no-select {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Chrome 6.0+, Safari 3.1+, Edge & Opera 15+ */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE 10+ and Edge */
+    user-select: none;
 }
 
 /* NAVBAR */
@@ -119,9 +123,9 @@ nav {
 #editor a {
     text-decoration: none;
     border-radius: 99px;
-    display: inline-block;     
-    position: relative;    
-    z-index: 65;      
+    display: inline-block;
+    position: relative;
+    z-index: 65;
     height: 60px;
     width: 60px;
 }
@@ -130,7 +134,8 @@ nav {
     cursor: pointer;
 }
 
-#editor a:focus, #editor a.active{
+#editor a:focus,
+#editor a.active {
     background-color: #1b3046;
 }
 
@@ -164,4 +169,29 @@ nav {
 
 .custom-menu li:hover {
     background-color: #DEF;
+}
+
+
+.float-panel {
+    padding: 5px;
+    border-radius: 99px;
+    padding: 10px;
+}
+
+.float-panel.float-left {
+    right: 0px;
+    left: 15px;
+    max-width: 650px;
+    max-height: 470px;
+    bottom: 15px;
+    position: fixed;
+
+}
+
+.float-panel .tab-content {
+    padding: 10px;
+}
+
+.float-panel button {
+    border-radius: 99px;
 }

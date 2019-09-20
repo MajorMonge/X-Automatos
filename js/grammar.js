@@ -5,7 +5,7 @@ const $BTN = $('#export-btn');
 const $EXPORT = $('#export');
 // Criando vetores de objetos
 var trees_global;
-var str = [];
+//var str = [];
 // Contadores para o vetor de objetos
 var counter_multiple_inputs = 0;
 var table_count = 0;
@@ -90,13 +90,18 @@ $("#btn-create").click(function () {
 //PREPARA PRA ANALISAR
 $("#btn-verify").click(function () {
     let entrada_usuario = document.getElementById('Expression').value;
-    let resultado_formado = "";
-    let indice_atual;
-    let contador = 0;
+
     trees_global = createGrammarTree();
     ////console.log(trees_global);
     //alert(entrada_usuario);
     ////console.log(grammarAnalyser(trees_global[0], entrada_usuario, 0, 0));
+
+    /*for(let i = 0; i <= entrada_usuario.length; i++) {
+        if (entrada_usuario[i] == "" && entrada_usuario[i] != "λ"){
+            entrada_usuario[i] += ("λ");
+        }
+    }*/
+    
     if (grammarAnalyser(trees_global[0], entrada_usuario, 0, 0)) {
         $('#Expression').css('background-color', '#17ff4d66')
 
@@ -115,7 +120,7 @@ $("#btn-multiple-verify").click(function () {
 function createGrammarTree() {
     let trees = [];
     let tempgrammar = [];
-    let final_string = [];
+    
 
     for (let i = 0; i < table_count; i++) {
         tempgrammar.push(
@@ -161,6 +166,7 @@ function grammarAnalyser(trees, entrada_usuario, contador_entrada, indice_atual)
     //console.log("[ITERAÇÃO]")
     ////console.log(trees)
     for(let i = 0; i < trees.filhos.length; i++){
+        
         if(trees.filhos[i].terminal == entrada_usuario[contador_entrada]){
             ////console.log("|-> Primeiro if | ", entrada_usuario.length-1, contador_entrada, trees.filhos[i].variavel)
             if(entrada_usuario.length-1 == contador_entrada && trees.filhos[i].variavel == null){
@@ -184,6 +190,7 @@ function multipleGrammarAnalyser(trees_global) {
 
     for (let i = 1; i <= counter_multiple_inputs; i++) {
         str[i] = document.getElementById('RegexString' + i).value;
+        //str[i] += "λ";
     }
 
     // let patt = /patt1/i;
@@ -200,7 +207,6 @@ function multipleGrammarAnalyser(trees_global) {
     }
 }
 //FIM DO ANÁLISE MULTIPLA
-
 
 function adicionarInput() {
     counter_multiple_inputs += 1;
