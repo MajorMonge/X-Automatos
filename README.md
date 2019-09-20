@@ -1,6 +1,7 @@
 X-Automatos
 ==================================================================
 Updates em:
+
           |--> ReGex - Deletado códigos inúteis/comentados
           
           |--> Gramática Regular - adicionado info e ajuda,
@@ -8,19 +9,25 @@ Updates em:
           |--> Automatos finitos - Adicionado multiplas entradas
           
 ===================================================================
+
 Gramática Regular
+
 ===================================================================
   Foi adicionado modals para informar de como utilizar a tabela e
   o analisador, também foi adicionado um info.
          
 ===================================================================
+
 Automatos Finitos
+
 ===================================================================
   Foi adicionado e melhorado a parte das multiplas entradas para
   facilitar a visualização das entradas.
   
 ===================================================================
+
 RegEx
+
 ===================================================================
   Nada a acrescentar. Pode-se adicionar/melhorar exemplos se qui-
   ser
