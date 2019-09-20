@@ -13,6 +13,7 @@ Updates em:
 Gramática Regular
 
 ===================================================================
+
   Foi adicionado modals para informar de como utilizar a tabela e
   o analisador, também foi adicionado um info.
          
@@ -21,6 +22,7 @@ Gramática Regular
 Automatos Finitos
 
 ===================================================================
+
   Foi adicionado e melhorado a parte das multiplas entradas para
   facilitar a visualização das entradas.
   
@@ -29,6 +31,7 @@ Automatos Finitos
 RegEx
 
 ===================================================================
+
   Nada a acrescentar. Pode-se adicionar/melhorar exemplos se qui-
   ser
   
