@@ -5,3 +5,19 @@
 .disable_td {
     cursor: not-allowed;
 }
+
+/* Mobile Styles */
+@media only screen and (max-width: 360px){
+    #tabela{
+        display: inline-block;
+        width: 100%;
+    }
+}
+
+/* Tablet Styles */
+@media only screen and (min-width: 410px) and (max-width: 960px){
+    #tabela{
+        display: inline-block;
+        width: 100%;
+    }
+}

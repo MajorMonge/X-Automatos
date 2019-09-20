@@ -71,6 +71,7 @@ var cy = cytoscape({
 
 /* VARIÁVEIS */
 let modoEdicao;
+var counter_multiple_inputs = 0;
 
 /* INICIALIZAÇÃO */
 $(document).ready(function () {
@@ -246,6 +247,20 @@ function styleNode(ref, node) {
   }
 }
 
+function adicionarInput() {
+  counter_multiple_inputs += 1;
+  $('.modal-div-strings').append(`
+    
+    <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text no-select" id="inputGroup-sizing-default">Entrada ${counter_multiple_inputs} </span>
+        </div>
+        <input type="text" class="form-control" id="EntradaAutomatos${counter_multiple_inputs}" aria-label="Default"
+            aria-describedby="inputGroup-sizing-default" style="width: 80%;">
+    </div>
+    `);
+}
+
 /* LÓGICA */
 $("#verificarSingle").click(function () {
   let entrada = $("#single-entrada").val();
@@ -259,8 +274,48 @@ $("#verificarSingle").click(function () {
     });
 
     ////console.log(inicial);
-    $("#resultadoSingle").text(resultAutomato(entrada, inicial, 0));
+    let result = resultAutomato(entrada, inicial, 0)
+    if (result) {
+      $(`#single-entrada`).css('background-color', '#17ff4d66');
+    } else {
+      $(`#single-entrada`).css('background-color', 'rgba(255, 23, 23, 0.4)');
+    }
+
   }
+})
+
+$("#verificarMultiple").click(function () {
+  let entrada = new Array();
+
+  for(let i = 1; i <= counter_multiple_inputs; i++) {
+    entrada[i] = $(`#EntradaAutomatos${i}`).val();
+    console.log(entrada[i]);
+  }
+  
+  let inicial;
+  let result;
+
+  cy.nodes().forEach(function (ele) { // Your function call inside
+    ////console.log("loop", ele.data(), ele.data().initial);
+    if (ele.data().initial)
+      inicial = ele.data();
+  });
+
+  for(let j = 1; j <= entrada.length; j++) {
+   
+    if (entrada[j] != "" && entrada[j] != null) {
+      ////console.log(inicial);
+      result = resultAutomato(entrada[j], inicial, 0);
+      if (result) {
+        $(`#EntradaAutomatos${j}`).css('background-color', '#17ff4d66');
+      } else {
+        $(`#EntradaAutomatos${j}`).css('background-color', 'rgba(255, 23, 23, 0.4)');
+      }
+      
+      //$("#resultadoSingle").text(resultAutomato(entrada, inicial, 0));
+    }
+  }
+  
 })
 
 function resultAutomato(entrada, node, indice) {
