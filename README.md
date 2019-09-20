@@ -15,7 +15,7 @@ Gramática Regular
 ===================================================================
 
   Foi adicionado modals para informar de como utilizar a tabela e
-  o analisador, também foi adicionado um info.
+  o analisador.
          
 ===================================================================
 
