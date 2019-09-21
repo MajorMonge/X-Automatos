@@ -40,7 +40,7 @@
                 </li>
             </ul>
             <span class="navbar-text">
-                <a href="#" data-toggle="modal" data-target="#sobreModalTrabalho">
+                <a href="#" data-toggle="modal" data-target="#sobreModalAutomatos">
                     <div data-icon="ei-exclamation" data-size="m"></div>
                 </a>
             </span>
@@ -67,22 +67,21 @@
             <div data-icon="ei-trash"></div>
         </a>
     </div>
-    <div class="modal fade no-select" id="sobreModalTrabalho" tabindex="-1" role="dialog"
+
+    <div class="modal fade no-select" id="sobreModalAutomatos" tabindex="-1" role="dialog"
         aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>SOBRE O TRABALHO</b></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>SOBRE OS AUTÔMATOS</b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h6><b>Info</b></h6>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
+                    <h6><b>Autômatos Finitos versão 1.0</b></h6>
+                    <p>O automato realiza leitura de AFD, permitindo múltiplas ou uma entrada.<br></p>
+                    <p>...<br></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Fechar</button>
@@ -91,6 +90,34 @@
         </div>
     </div>
 
+    <div class="modal fade no-select" id="help" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>SOBRE OS AUTÔMATOS</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6><b>Autômatos Finitos versão 1.0</b></h6>
+                    <p>Da esquerda para direita, pode se observar cinco ícones embaixo da nav-bar, estes são as opções para manipular os autômatos</p>
+                    <p>Primeira opção: Seleciona o estado do autômato, podendo move-lo e trocar seu estado para inicial ou final</p>
+                    <p>Segunda opção: Adiciona estados de um autômato</p>
+                    <p>
+                        Terceira opção: Liga um estado ao outro, clique com o botão esquerdo no primeiro estado e 
+                        depois(com o botão esquerdo ainda pressionado) arraste para outro estado, aparecera uma janela pedindo o valor da transição
+                    </p>
+                    <p>Quarta opção: Edita o nome do estado ou a transição dele quando clicar com o botão esquerdo do mouse.</p>
+                    <p>Quinta opção: Quando ativa, é possivel deletar os estados e transições com o clique do botão esquerdo do mouse.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="float-panel float-left">
         <div class="card">
@@ -106,6 +133,10 @@
                 <li class="nav-item">
                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                         aria-controls="contact" aria-selected="false">Multiplas Entradas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="modal" data-target="#help" href="#" role="tab" aria-controls="contact"
+                        aria-selected="false">Ajuda</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
