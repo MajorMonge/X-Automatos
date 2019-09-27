@@ -86,7 +86,7 @@ $BTN.on('click', () => {
 
 $("#btn-create").click(function () {
     trees_global = createGrammarTree();
-    ////console.log(trees_global);
+    //////console.log(trees_global);
 })
 
 //PREPARA PRA ANALISAR
@@ -94,9 +94,9 @@ $("#btn-verify").click(function () {
     entrada_usuario = document.getElementById('Expression').value;
     //entrada_usuario += "λ";
     trees_global = createGrammarTree();
-    ////console.log(trees_global);
+    //////console.log(trees_global);
     //alert(entrada_usuario);
-    ////console.log(grammarAnalyser(trees_global[0], entrada_usuario, 0, 0));
+    //////console.log(grammarAnalyser(trees_global[0], entrada_usuario, 0, 0));
 
     /*for(let i = 0; i <= entrada_usuario.length; i++) {
         if (entrada_usuario[i] == "" && entrada_usuario[i] != "λ"){
@@ -129,13 +129,80 @@ function createGrammarTree() {
                 if ($(`#Grammar${i}`).text() == "λ") {
                     if (!entrada_usuario.includes('λ'))
                         entrada_usuario = entrada_usuario.concat('λ')
-                    console.log(entrada_usuario);
+                    //console.log(entrada_usuario);
+
+                }
+                tempgrammar.push(
+                    {
+                        indice: $(`#Token${i}`).text(),
+                        terminal: $(`#Grammar${i}`).text()[0],
+                    }
+                );
+            } else {
+                tempgrammar.push(
+                    {
+                        indice: $(`#Token${i}`).text(),
+                        variavel: $(`#Grammar${i}`).text()[0],
+                    }
+                );
+            }
+
+        } else if ($(`#Grammar${i}`).text().length == 2) {
+            tempgrammar.push(
+                {
+                    indice: $(`#Token${i}`).text(),
+                    terminal: $(`#Grammar${i}`).text()[0],
+                    variavel: $(`#Grammar${i}`).text()[1],
+                }
+            );
+        }
+
+    }
+    //FORMAR NODOS
+    tempgrammar.forEach((element, index) => {
+        let contain = false;
+        trees.forEach((node) => {
+            if (node.indice == element.indice)
+                contain = true;
+        })
+        if (!contain) {
+            trees.push({ indice: element.indice, filhos: [] });
+        }
+    })
+
+    tempgrammar.forEach((element, index) => {
+        trees.forEach((node) => {
+            if (node.indice == element.indice && element.variavel == null) {
+                node.filhos.push({ terminal: element.terminal, variavel: null });
+            } else if (node.indice == element.indice) {
+                trees.forEach((subnode) => {
+                    if (subnode.indice == element.variavel) {
+                        node.filhos.push({ terminal: element.terminal, variavel: subnode });
+                    }
+                })
+            }
+        })
+    })
+
+    return trees;
+}
+
+function createGrammarTreeMultipleInputs() {
+    let trees = [];
+    let tempgrammar = [];
+
+
+    for (let i = 0; i < table_count; i++) {
+        if ($(`#Grammar${i}`).text().length < 2) {
+            if (isLowerCase($(`#Grammar${i}`).text()) || $(`#Grammar${i}`).text() == "λ") {
+                if ($(`#Grammar${i}`).text() == "λ") {
 
                     for (let i = 1; i <= counter_multiple_inputs; i++) {
 
                         if (!str[i].includes('λ'))
                             str[i] = str[i].concat('λ')
-                        //str[i] += "λ";
+                            //str[i] += "λ";
+                            //console.log("Vetor das entradas:",str[i]);
                     }
                 }
                 tempgrammar.push(
@@ -196,33 +263,33 @@ function createGrammarTree() {
 
 //ALGORITIMO DE ANALISE
 function grammarAnalyser(trees, entrada_usuario, contador_entrada, indice_atual) {
-    //console.log("[ITERAÇÃO]")
+    ////console.log("[ITERAÇÃO]")
     let results = [];
     for (let i = 0; i < trees.filhos.length; i++) {
-        console.log("FOR | ", i, entrada_usuario.length - 1, contador_entrada, trees, entrada_usuario[contador_entrada]);
+        //console.log("FOR | ", i, entrada_usuario.length - 1, contador_entrada, trees, entrada_usuario[contador_entrada]);
         if (trees.filhos[i].terminal == entrada_usuario[contador_entrada]) {
-            console.log("|-> Primeiro if | ")
+            //console.log("|-> Primeiro if | ")
             if (entrada_usuario.length - 1 == contador_entrada && trees.filhos[i].variavel == null) {
-                console.log("\tResultando em 1")
+                //console.log("\tResultando em 1")
                 results.push(true);
             } else if (entrada_usuario.length - 1 == contador_entrada && trees.filhos[i].variavel.filhos[0].terminal == "λ") {
-                console.log("\tResultando em 2")
+                //console.log("\tResultando em 2")
                 results.push(true);
             } else if (entrada_usuario.length - 1 != contador_entrada && trees.filhos[i].variavel != null) {
-                console.log("\tResultando em 3")
+                //console.log("\tResultando em 3")
                 results.push(grammarAnalyser(trees.filhos[i].variavel, entrada_usuario, contador_entrada + 1, indice_atual))
             } else {
-                console.log("\tResultando em 4")
+                //console.log("\tResultando em 4")
             }
         } else if (trees.filhos[i].terminal == undefined) {
-            console.log("| -> Terceiro if |")
+            //console.log("| -> Terceiro if |")
             results.push(grammarAnalyser(trees.filhos[i].variavel, entrada_usuario, contador_entrada, indice_atual));
         } else {
-            console.log("| -> Necas|")
+            //console.log("| -> Necas|")
         }
     }
 
-    console.log("<- Voltando|")
+    //console.log("<- Voltando|")
     for (let i = 0; i < results.length; i++) {
         if (results[i] == true)
             return true
@@ -239,7 +306,7 @@ function multipleGrammarAnalyser() {
         str[i] = document.getElementById('RegexString' + i).value;
         //str[i] += "λ";
     }
-    trees_global = createGrammarTree();
+    trees_global = createGrammarTreeMultipleInputs();
     // let patt = /patt1/i;
     let result;
     //let multiple_tree = createGrammarTree();
