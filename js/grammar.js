@@ -90,7 +90,7 @@ $("#btn-create").click(function () {
 //PREPARA PRA ANALISAR
 $("#btn-verify").click(function () {
     let entrada_usuario = document.getElementById('Expression').value;
-
+    //entrada_usuario += "λ";
     trees_global = createGrammarTree();
     ////console.log(trees_global);
     //alert(entrada_usuario);
@@ -123,13 +123,33 @@ function createGrammarTree() {
     
 
     for (let i = 0; i < table_count; i++) {
-        tempgrammar.push(
-            {
-                indice: $(`#Token${i}`).text(),
-                terminal: $(`#Grammar${i}`).text()[0],
-                variavel: $(`#Grammar${i}`).text()[1],
+        if ($(`#Grammar${i}`).text().length < 2){
+            if (isLowerCase($(`#Grammar${i}`).text()) || $(`#Grammar${i}`).text() == "λ" ) {
+                tempgrammar.push(
+                    {
+                        indice: $(`#Token${i}`).text(),
+                        terminal: $(`#Grammar${i}`).text()[0],
+                    }
+                );
+            } else {
+                tempgrammar.push(
+                    {
+                        indice: $(`#Token${i}`).text(),
+                        variavel: $(`#Grammar${i}`).text()[0],
+                    }
+                );
             }
-        );
+            
+        } else if ($(`#Grammar${i}`).text().length == 2) {
+            tempgrammar.push(
+                {
+                    indice: $(`#Token${i}`).text(),
+                    terminal: $(`#Grammar${i}`).text()[0],
+                    variavel: $(`#Grammar${i}`).text()[1],
+                }
+            );
+        }
+        
     }
     //FORMAR NODOS
     tempgrammar.forEach((element, index) => {
@@ -165,21 +185,35 @@ function createGrammarTree() {
 function grammarAnalyser(trees, entrada_usuario, contador_entrada, indice_atual) {
     //console.log("[ITERAÇÃO]")
     ////console.log(trees)
-    for(let i = 0; i < trees.filhos.length; i++){
-        
+    let results = [];
+    for (let i = 0; i < trees.filhos.length; i++) {
+        console.log("FOR | ", i)
         if(trees.filhos[i].terminal == entrada_usuario[contador_entrada]){
-            ////console.log("|-> Primeiro if | ", entrada_usuario.length-1, contador_entrada, trees.filhos[i].variavel)
-            if(entrada_usuario.length-1 == contador_entrada && trees.filhos[i].variavel == null){
-                return true;
-            }else if(entrada_usuario.length-1 != contador_entrada && trees.filhos[i].variavel != null){
-                return grammarAnalyser(trees.filhos[i].variavel, entrada_usuario, contador_entrada+1, indice_atual)
+            console.log("|-> Primeiro if | ", entrada_usuario.length-1, contador_entrada, trees.filhos[i].variavel)
+            if (entrada_usuario.length - 1 == contador_entrada && trees.filhos[i].variavel == null) {
+                console.log("Resultando em 1")
+                results.push(true);
+            } else if (entrada_usuario.length - 1 == contador_entrada && trees.filhos[i].variavel.filhos[0].terminal == "λ") {
+                console.log("Resultando em 2")
+                results.push(true);
+            } else if (entrada_usuario.length - 1 != contador_entrada && trees.filhos[i].variavel != null) {
+                console.log("Resultando em 3")
+                results.push(grammarAnalyser(trees.filhos[i].variavel, entrada_usuario, contador_entrada+1, indice_atual))
+            } else{
+                
+                console.log("Resultando em 3")
             }
-        }else{
-
+        } else if (trees.filhos[i].terminal == undefined){
+            results.push(grammarAnalyser(trees.filhos[i].variavel, entrada_usuario, contador_entrada, indice_atual));
         }
     }
-    return false;
     
+    for(let i = 0; i < results.length; i++){
+        if(results[i]==true)
+            return true
+    }
+
+    return false;
 }
 //FIM DO ALGORIMOT DE ANÁLISE
 
@@ -207,6 +241,10 @@ function multipleGrammarAnalyser(trees_global) {
     }
 }
 //FIM DO ANÁLISE MULTIPLA
+
+function isLowerCase(str) {
+    return str == str.toLowerCase() && str != str.toUpperCase();
+}
 
 function adicionarInput() {
     counter_multiple_inputs += 1;
