@@ -114,6 +114,7 @@ cy.on('tap', 'node', function (event) {
   var node = cy.$('#' + event.target.id());
   if (modoEdicao == "excluir") {
     cy.remove(node);
+    console.log(node.removed())
   } else if (modoEdicao == "editar") {
     let name = prompt("Digite o valor a ser atualizado:");
     if (name !== null) {
@@ -170,8 +171,6 @@ cy.on('mousedown', 'node', function (event) {
       cy.add([{
         group: 'edges', data: { source: firstNode.data().id, target: secondNode.data().id, label: name }
       }]);
-      let elem = cy.getElementById(firstNode.data().id);
-      elem.data().link.push({ value: name, target: secondNode });
     }
   }
 });
@@ -270,7 +269,7 @@ $("#verificarSingle").click(function () {
     cy.nodes().forEach(function (ele) { // Your function call inside
       ////console.log("loop", ele.data(), ele.data().initial);
       if (ele.data().initial)
-        inicial = ele.data();
+        inicial = ele;
     });
 
     ////console.log(inicial);
@@ -287,22 +286,22 @@ $("#verificarSingle").click(function () {
 $("#verificarMultiple").click(function () {
   let entrada = new Array();
 
-  for(let i = 1; i <= counter_multiple_inputs; i++) {
+  for (let i = 1; i <= counter_multiple_inputs; i++) {
     entrada[i] = $(`#EntradaAutomatos${i}`).val();
     console.log(entrada[i]);
   }
-  
+
   let inicial;
   let result;
 
   cy.nodes().forEach(function (ele) { // Your function call inside
     ////console.log("loop", ele.data(), ele.data().initial);
     if (ele.data().initial)
-      inicial = ele.data();
+      inicial = ele;
   });
 
-  for(let j = 1; j <= entrada.length; j++) {
-   
+  for (let j = 1; j <= entrada.length; j++) {
+
     if (entrada[j] != "" && entrada[j] != null) {
       ////console.log(inicial);
       result = resultAutomato(entrada[j], inicial, 0);
@@ -311,30 +310,47 @@ $("#verificarMultiple").click(function () {
       } else {
         $(`#EntradaAutomatos${j}`).css('background-color', 'rgba(255, 23, 23, 0.4)');
       }
-      
+
       //$("#resultadoSingle").text(resultAutomato(entrada, inicial, 0));
     }
   }
-  
+
 })
 
 function resultAutomato(entrada, node, indice) {
   let result = false;
-
-  for (let x = 0; x < node.link.length; x++) {
-    if (node.link[x].value == entrada[indice]) {
-      if (node.link[x].target.data().final == true && indice == entrada.length - 1) {
-        result = true;
-        break;
-      } else if (indice != entrada.length) {
-        result = resultAutomato(entrada, node.link[x].target.data(), indice += 1);
-        break;
+  let nodes = cy.nodes();
+  let edges = cy.edges();
+  let connections = node.connectedEdges();
+  let results = [];
+  
+  console.log("Conexoes", Object.keys(connections).length, connections);
+  for (let i = 0; i < connections.length; i++) {
+    if (connections[i] !== undefined) {
+      if (connections[i].data().label == entrada[indice] && connections[i].data().source == node.data().id) {
+        console.log(entrada[indice]);
+        console.log("Verificando edge: ", connections[i].data(),node.data().id );
+        if (cy.getElementById(connections[i].data().target).data().final == true && indice == entrada.length - 1) {
+          console.log("\tSubif 1");
+          results.push(true);
+        } else if (indice <= entrada.length - 1) {
+          results.push(resultAutomato(entrada, cy.getElementById(connections[i].data().target), indice += 1))
+          console.log("\tSubif 2");
+        }else{
+          console.log("\tSubif 3")
+        }
       } else {
-        result = false;
+        results.push(false)
       }
-    } else {
-      result = false;
+    }else{
+      results.push(false)
     }
   }
-  return result;
+
+  for (let i = 0; i < results.length; i++) {
+    if (results[i] == true)
+      return true
+  }
+
+  return false;
 }
