@@ -354,3 +354,117 @@ function resultAutomato(entrada, node, indice) {
 
   return false;
 }
+
+/* IMPORTAÇÃO */
+function getReferenceId(id, tNodes){
+  for(let i = 0; i < tNodes.length; i++ ){
+    if(tNodes[i].nodeid == id){
+      return tNodes[i].id;
+    }
+  }
+}
+
+$("#exportar").on("click", function (event) {
+  let exportString;
+  let tNodes = []
+  exportString = 
+  `<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>&#13;
+    <type>fa</type>&#13;
+    <automaton>&#13;
+    <!--The list of states.-->&#13;`;
+  cy.nodes().forEach(function (ele, index) { 
+    console.log( ele.data());
+    tNodes.push({id: index, nodeid: ele.data().id})
+    exportString += 
+    `<state id="${index}" name="${ele.data().label}">&#13;
+			<x>${ele.position('x')}</x>&#13;
+      <y>${ele.position('y')}</y>&#13;
+      ${ele.data().initial ? 
+      `<initial/>&#13;` : ``}
+      ${ele.data().final ? 
+      `<final/>&#13;` : ``}
+		</state>&#13; `
+  });
+  console.log(tNodes)
+  exportString += 
+  `<!--The list of transitions.-->&#13;`;
+  cy.edges().forEach(function (ele, index) { 
+    console.log( ele.data());
+    exportString += 
+    `<transition>&#13;
+      <from>${getReferenceId(ele.data().source, tNodes)}</from>&#13;
+      <to>${getReferenceId(ele.data().target, tNodes)}</to>&#13;
+      <read>${ele.data().label}</read>&#13;
+    </transition>&#13;`
+  });
+
+  exportString += 
+  ` 
+    </automaton>&#13;
+  </structure>`
+  console.log(exportString)
+  var today = new Date();
+  let FileSaver = saveAs(new Blob(
+    [exportString]
+    ,{type: "application/xml;charset=uft-8"}
+    )
+    ,`Automato_${today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate() + '_' + today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds()}.jff`);
+
+FileSaver;
+})
+
+function getReverseReferenceId(id, tNodes){
+  for(let i = 0; i < tNodes.length; i++ ){
+    if(tNodes[i].id == id){
+      return tNodes[i].nodeid;
+    }
+  }
+}
+
+function importAutomaton(automaton){
+  let tNodes = [];
+  cy.remove(cy.elements());
+  automaton.state.forEach(function (node, index){
+    //console.log(node);
+    cy.add([{
+      data: { label: node.name, initial: node.hasOwnProperty("initial") ? true : false, final: node.hasOwnProperty("final") ? true : false, link: [] },
+      renderedPosition: {
+        x: node.x,
+        y: node.y,
+      },
+    }]);
+    tNodes.push({nodeid: cy.nodes()[cy.nodes().length-1].data().id, id: node.id})
+    styleNode(cy.nodes()[cy.nodes().length-1],  '#' + cy.nodes()[cy.nodes().length-1].data().id)
+  })
+
+  automaton.transition.forEach(function (edge, index){
+    cy.add([{
+      group: 'edges', data: { source: getReverseReferenceId(edge.from, tNodes), target: getReverseReferenceId(edge.to, tNodes), label: edge.read }
+    }]);
+  })
+  getReverseReferenceId('', tNodes);
+  cy.center()
+}
+
+$('#importar').click(function() {
+  let contents;
+  let parse;
+  $('<input type="file">').on('change', function () {
+      myfiles = this.files; //save selected files to the array
+      //console.log(myfiles); //show them on console
+      let reader =  new FileReader();
+      reader.onload = function(e) {
+          contents = e.target.result.toString();
+          //console.log(contents);
+          contents = contents.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '<xml version="1.0" encoding="UTF-8" standalone="no">');
+          contents += '</xml>'
+          parse = xmlToJson.parse(contents)
+          console.log(parse);
+          if(parse.xml.structure.type != "fa")
+            alert("O arquivo importado deve ser do tipo Automato Finito");
+          else
+            importAutomaton(parse.xml.structure.automaton)
+      }
+      reader.readAsText(myfiles[0]);
+  }).click();
+});

@@ -66,6 +66,13 @@
         <a id="excluir" href="#" class="btn btn-secondary">
             <div data-icon="ei-trash"></div>
         </a>
+        <a id="exportar" href="#" class="btn btn-secondary">
+            <div data-icon="ei-arrow-up"></div>
+        </a>
+        <a id="importar" href="#" class="btn btn-secondary">
+            <input id="importB" type="file" name="input-name" style="display: none;" />
+            <div data-icon="ei-arrow-down"></div>
+        </a>
     </div>
 
     <div class="modal fade no-select" id="sobreModalAutomatos" tabindex="-1" role="dialog"
@@ -90,8 +97,8 @@
         </div>
     </div>
 
-    <div class="modal fade no-select" id="help" tabindex="-1" role="dialog"
-        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade no-select" id="help" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -102,15 +109,20 @@
                 </div>
                 <div class="modal-body">
                     <h6><b>Autômatos Finitos versão 1.0</b></h6>
-                    <p>Da esquerda para direita, pode se observar cinco ícones embaixo da nav-bar, estes são as opções para manipular os autômatos</p>
-                    <p>Primeira opção: Seleciona o estado do autômato, podendo move-lo e trocar seu estado para inicial ou final</p>
+                    <p>Da esquerda para direita, pode se observar cinco ícones embaixo da nav-bar, estes são as opções
+                        para manipular os autômatos</p>
+                    <p>Primeira opção: Seleciona o estado do autômato, podendo move-lo e trocar seu estado para inicial
+                        ou final</p>
                     <p>Segunda opção: Adiciona estados de um autômato</p>
                     <p>
-                        Terceira opção: Liga um estado ao outro, clique com o botão esquerdo no primeiro estado e 
-                        depois(com o botão esquerdo ainda pressionado) arraste para outro estado, aparecera uma janela pedindo o valor da transição
+                        Terceira opção: Liga um estado ao outro, clique com o botão esquerdo no primeiro estado e
+                        depois(com o botão esquerdo ainda pressionado) arraste para outro estado, aparecera uma janela
+                        pedindo o valor da transição
                     </p>
-                    <p>Quarta opção: Edita o nome do estado ou a transição dele quando clicar com o botão esquerdo do mouse.</p>
-                    <p>Quinta opção: Quando ativa, é possivel deletar os estados e transições com o clique do botão esquerdo do mouse.</p>
+                    <p>Quarta opção: Edita o nome do estado ou a transição dele quando clicar com o botão esquerdo do
+                        mouse.</p>
+                    <p>Quinta opção: Quando ativa, é possivel deletar os estados e transições com o clique do botão
+                        esquerdo do mouse.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Fechar</button>
@@ -135,8 +147,8 @@
                         aria-controls="contact" aria-selected="false">Multiplas Entradas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="modal" data-target="#help" href="#" role="tab" aria-controls="contact"
-                        aria-selected="false">Ajuda</a>
+                    <a class="nav-link" id="contact-tab" data-toggle="modal" data-target="#help" href="#" role="tab"
+                        aria-controls="contact" aria-selected="false">Ajuda</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -159,10 +171,11 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Vão existir coisas aqui no futuro</div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Vão existir coisas
+                    aqui no futuro</div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="modal-div-strings" style="overflow-y: scroll; height: 150px;">
-                            
+
                     </div>
                     <button type="button" class="btn btn-primary" onclick="adicionarInput()">Adicionar Entradas</button>
                     <button id="verificarMultiple" type="button" class="btn btn-primary">Verificar</button>
@@ -176,13 +189,16 @@
         <li id="final" data-action="second">Final</li>
     </ul>
 
+    <script src="./js/filesaver/FileSaver.js"></script>
     <script src="./js/jquery/jquery-3.4.1.min.js"></script>
     <script src="./js/jquery/popper.min.js"></script>
     <script src="./js/bootstrap/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.9.2/cytoscape.min.js"
         integrity="sha256-/9/zZEd/HVvoKFJ826QwJv6XruSCLbMvgIxA3ohKmVo=" crossorigin="anonymous"></script>
+    <script src="./js/xml2json.js"></script>
     <script src="./js/automatos.js"></script>
+
 
 </body>
 
