@@ -331,7 +331,7 @@ function adicionarInput() {
     $('.modal-div-strings').append(`
     
     <div class="input-group mb-3">
-            <div class="input-group-prepend">
+        <div class="input-group-prepend">
             <span class="input-group-text no-select" id="inputGroup-sizing-default">Entrada ${counter_multiple_inputs} </span>
         </div>
         <input type="text" class="form-control" id="RegexString${counter_multiple_inputs}" aria-label="Default"
