@@ -1,1 +1,1 @@
-X-Automatos // [Prefiro Atomatoinator] - J
+X-Automatos

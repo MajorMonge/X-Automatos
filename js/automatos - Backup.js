@@ -323,26 +323,26 @@ function resultAutomato(entrada, node, indice) {
   let edges = cy.edges();
   let connections = node.connectedEdges();
   let results = [];
-
+  
   console.log("Conexoes", Object.keys(connections).length, connections);
   for (let i = 0; i < connections.length; i++) {
     if (connections[i] !== undefined) {
       if (connections[i].data().label == entrada[indice] && connections[i].data().source == node.data().id) {
         console.log(entrada[indice]);
-        console.log("Verificando edge: ", connections[i].data(), node.data().id);
+        console.log("Verificando edge: ", connections[i].data(),node.data().id );
         if (cy.getElementById(connections[i].data().target).data().final == true && indice == entrada.length - 1) {
           console.log("\tSubif 1");
           results.push(true);
         } else if (indice <= entrada.length - 1) {
           results.push(resultAutomato(entrada, cy.getElementById(connections[i].data().target), indice += 1))
           console.log("\tSubif 2");
-        } else {
+        }else{
           console.log("\tSubif 3")
         }
       } else {
         results.push(false)
       }
-    } else {
+    }else{
       results.push(false)
     }
   }
@@ -356,9 +356,9 @@ function resultAutomato(entrada, node, indice) {
 }
 
 /* IMPORTAÇÃO */
-function getReferenceId(id, tNodes) {
-  for (let i = 0; i < tNodes.length; i++) {
-    if (tNodes[i].nodeid == id) {
+function getReferenceId(id, tNodes){
+  for(let i = 0; i < tNodes.length; i++ ){
+    if(tNodes[i].nodeid == id){
       return tNodes[i].id;
     }
   }
@@ -367,64 +367,64 @@ function getReferenceId(id, tNodes) {
 $("#exportar").on("click", function (event) {
   let exportString;
   let tNodes = []
-  exportString =
-    `<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>&#13;
+  exportString = 
+  `<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>&#13;
     <type>fa</type>&#13;
     <automaton>&#13;
     <!--The list of states.-->&#13;`;
-  cy.nodes().forEach(function (ele, index) {
-    console.log(ele.data());
-    tNodes.push({ id: index, nodeid: ele.data().id })
-    exportString +=
-      `<state id="${index}" name="${ele.data().label}">&#13;
+  cy.nodes().forEach(function (ele, index) { 
+    console.log( ele.data());
+    tNodes.push({id: index, nodeid: ele.data().id})
+    exportString += 
+    `<state id="${index}" name="${ele.data().label}">&#13;
 			<x>${ele.position('x')}</x>&#13;
       <y>${ele.position('y')}</y>&#13;
-      ${ele.data().initial ?
-        `<initial/>&#13;` : ``}
-      ${ele.data().final ?
-        `<final/>&#13;` : ``}
+      ${ele.data().initial ? 
+      `<initial/>&#13;` : ``}
+      ${ele.data().final ? 
+      `<final/>&#13;` : ``}
 		</state>&#13; `
   });
   console.log(tNodes)
-  exportString +=
-    `<!--The list of transitions.-->&#13;`;
-  cy.edges().forEach(function (ele, index) {
-    console.log(ele.data());
-    exportString +=
-      `<transition>&#13;
+  exportString += 
+  `<!--The list of transitions.-->&#13;`;
+  cy.edges().forEach(function (ele, index) { 
+    console.log( ele.data());
+    exportString += 
+    `<transition>&#13;
       <from>${getReferenceId(ele.data().source, tNodes)}</from>&#13;
       <to>${getReferenceId(ele.data().target, tNodes)}</to>&#13;
       <read>${ele.data().label}</read>&#13;
     </transition>&#13;`
   });
 
-  exportString +=
-    ` 
+  exportString += 
+  ` 
     </automaton>&#13;
   </structure>`
   console.log(exportString)
   var today = new Date();
   let FileSaver = saveAs(new Blob(
     [exportString]
-    , { type: "application/xml;charset=uft-8" }
-  )
-    , `Automato_${today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '_' + today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds()}.jff`);
+    ,{type: "application/xml;charset=uft-8"}
+    )
+    ,`Automato_${today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate() + '_' + today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds()}.jff`);
 
-  FileSaver;
+FileSaver;
 })
 
-function getReverseReferenceId(id, tNodes) {
-  for (let i = 0; i < tNodes.length; i++) {
-    if (tNodes[i].id == id) {
+function getReverseReferenceId(id, tNodes){
+  for(let i = 0; i < tNodes.length; i++ ){
+    if(tNodes[i].id == id){
       return tNodes[i].nodeid;
     }
   }
 }
 
-function importAutomaton(automaton) {
+function importAutomaton(automaton){
   let tNodes = [];
   cy.remove(cy.elements());
-  automaton.state.forEach(function (node, index) {
+  automaton.state.forEach(function (node, index){
     //console.log(node);
     cy.add([{
       data: { label: node.name, initial: node.hasOwnProperty("initial") ? true : false, final: node.hasOwnProperty("final") ? true : false, link: [] },
@@ -433,11 +433,11 @@ function importAutomaton(automaton) {
         y: node.y,
       },
     }]);
-    tNodes.push({ nodeid: cy.nodes()[cy.nodes().length - 1].data().id, id: node.id })
-    styleNode(cy.nodes()[cy.nodes().length - 1], '#' + cy.nodes()[cy.nodes().length - 1].data().id)
+    tNodes.push({nodeid: cy.nodes()[cy.nodes().length-1].data().id, id: node.id})
+    styleNode(cy.nodes()[cy.nodes().length-1],  '#' + cy.nodes()[cy.nodes().length-1].data().id)
   })
 
-  automaton.transition.forEach(function (edge, index) {
+  automaton.transition.forEach(function (edge, index){
     cy.add([{
       group: 'edges', data: { source: getReverseReferenceId(edge.from, tNodes), target: getReverseReferenceId(edge.to, tNodes), label: edge.read }
     }]);
@@ -446,26 +446,26 @@ function importAutomaton(automaton) {
   cy.center()
 }
 
-$('#importar').click(function () {
+$('#importar').click(function() {
   let contents;
   let parse;
   $('<input type="file">').on('change', function () {
-    myfiles = this.files; //save selected files to the array
-    //console.log(myfiles); //show them on console
-    let reader = new FileReader();
-    reader.onload = function (e) {
-      contents = e.target.result.toString();
-      //console.log(contents);
-      contents = contents.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '<xml version="1.0" encoding="UTF-8" standalone="no">');
-      contents += '</xml>'
-      parse = xmlToJson.parse(contents)
-      console.log(parse);
-      if (parse.xml.structure.type != "fa")
-        alert("O arquivo importado deve ser do tipo Automato Finito");
-      else
-        importAutomaton(parse.xml.structure.automaton)
-    }
-    reader.readAsText(myfiles[0]);
+      myfiles = this.files; //save selected files to the array
+      //console.log(myfiles); //show them on console
+      let reader =  new FileReader();
+      reader.onload = function(e) {
+          contents = e.target.result.toString();
+          //console.log(contents);
+          contents = contents.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '<xml version="1.0" encoding="UTF-8" standalone="no">');
+          contents += '</xml>'
+          parse = xmlToJson.parse(contents)
+          console.log(parse);
+          if(parse.xml.structure.type != "fa")
+            alert("O arquivo importado deve ser do tipo Automato Finito");
+          else
+            importAutomaton(parse.xml.structure.automaton)
+      }
+      reader.readAsText(myfiles[0]);
   }).click();
 });
 
@@ -557,6 +557,21 @@ function convertGrtoAF(production, production_length) {
             temZ: true,
           }
         );
+
+        /*
+        nodeTable.push(
+          {
+            id: 0,
+            origem: production[i].variavel,
+            destino: "none",
+            label: production[i].variavel,
+            initial: true,
+            //final: true,
+            terminal: "none",
+            temZ: true,
+          }
+        );
+        */
       } else {
         nodeTable.push(
           {
@@ -587,6 +602,22 @@ function convertGrtoAF(production, production_length) {
             temZ: true,
           }
         );
+
+        /*
+        nodeTable.push(
+          {
+            id: 0,
+            origem: production[i].variavel,
+            destino: "none",
+            label: production[i].variavel,
+            initial: true,
+            //final: true,
+            terminal: "none",
+            temZ: true,
+          }
+        );
+        */
+       
       } else {
         nodeTable.push(
           {
@@ -600,9 +631,9 @@ function convertGrtoAF(production, production_length) {
             temZ: false,
           }
         );
-
+        
         // id para identificação das areas das tabelas, por mais que eu acabei não usando elas, deixei pq o código n funciona sem elas
-        if ((production[i + 1] !== undefined) && production[i].left != production[i + 1].left || production[i].variavel === "Z") {
+        if ((production[i + 1] !== undefined ) && production[i].left != production[i + 1].left || production[i].variavel === "Z") {
           id = id + 1;
         }
       }
@@ -634,9 +665,11 @@ function convertGrtoAF(production, production_length) {
 
   tNodes.push({ nodeid: cy.nodes()[cy.nodes().length - 1].data().id, id: `Z` })
   styleNode(cy.nodes()[cy.nodes().length - 1], '#' + cy.nodes()[cy.nodes().length - 1].data().id)
-
+  
   let aux_vetor = [];
   let count = 0;
+
+  let flag = false;
 
   for (let i = 0; i < nodeTable.length; i++) {
     aux_vetor[i] = nodeTable[i].label;
@@ -645,9 +678,9 @@ function convertGrtoAF(production, production_length) {
   aux_vetor = getUnique(aux_vetor);
   console.log(aux_vetor);
 
-  for (let j = 0; j < nodeTable.length; j++) {
+  for (let j = 0; j < nodeTable.length && flag != true; j++) {
 
-    if (aux_vetor[count] == nodeTable[j].label && nodeTable[j].label != "Z") {
+    if (aux_vetor[count] == nodeTable[j].label) {
       cy.add([{
         data: { label: nodeTable[j].label, initial: nodeTable[j].hasOwnProperty("initial") ? true : false, final: nodeTable[j].hasOwnProperty("final") ? true : false, link: [] },
         renderedPosition: {
@@ -666,12 +699,107 @@ function convertGrtoAF(production, production_length) {
       tNodes.push({ nodeid: cy.nodes()[cy.nodes().length - 1].data().id, id: nodeTable[j].label })
       count++;
     }
+    
+    /*
+    if ((nodeTable[j + 1] != undefined || nodeTable[j + 1] != null) && nodeTable[j].origem !== nodeTable[j + 1].origem) {
+      cy.add([{
+        data: { label: nodeTable[j].label, initial: nodeTable[j].hasOwnProperty("initial") ? true : false, final: nodeTable[j].hasOwnProperty("final") ? true : false, link: [] },
+        renderedPosition: {
+          x: x,
+          y: y,
+        },
+      }]);
 
+
+      console.log("Label: " + nodeTable[j].label);
+      console.log("Origem: " + nodeTable[j].origem);
+      console.log("Destino: " + nodeTable[j].destino);
+      console.log("Alfabeto: " + nodeTable[j].terminal);
+
+
+      tNodes.push({ nodeid: cy.nodes()[cy.nodes().length - 1].data().id, id: nodeTable[j].label })
+    } else if (nodeTable[j + 1] === undefined || nodeTable[j + 1] === null) { //Quando for o ultimo objeto do vetor, adiciona o node com as infos.
+      cy.add([{
+        data: { label: nodeTable[j].label, initial: nodeTable[j].hasOwnProperty("initial") ? true : false, final: nodeTable[j].hasOwnProperty("final") ? true : false, link: [] },
+        renderedPosition: {
+          x: x,
+          y: y,
+        },
+      }]);
+
+
+      console.log("Label: " + nodeTable[j].label);
+      console.log("Origem: " + nodeTable[j].origem);
+      console.log("Destino: " + nodeTable[j].destino);
+      console.log("Alfabeto: " + nodeTable[j].terminal);
+
+
+      // Push das infos dos nodes e seus respectivos ids no vetor tNodes.
+      tNodes.push({ nodeid: cy.nodes()[cy.nodes().length - 1].data().id, id: nodeTable[j].label })
+    } */
+
+    /*
+    if (nodeTable[j].temZ === true && hasZNode === false) { // Se o automato Z não exister e chegar em um objeto com ele, cria um node chamado Z.
+      cy.add([{
+        data: { label: `Z`, initial: nodeTable[j].hasOwnProperty("initial") ? true : false, final: nodeTable[j].hasOwnProperty("final") ? true : false, link: [] },
+        renderedPosition: {
+          x: x,
+          y: y,
+        },
+      }]);
+      hasZNode = true;
+
+
+      console.log("Label: " + nodeTable[j].label);
+      console.log("Origem: " + nodeTable[j].origem);
+      console.log("Destino: " + nodeTable[j].destino);
+      console.log("Alfabeto: " + nodeTable[j].terminal);
+
+
+      tNodes.push({ nodeid: cy.nodes()[cy.nodes().length - 1].data().id, id: `Z` })
+    } 
+    if ((nodeTable[j + 1] != undefined || nodeTable[j + 1] != null) && nodeTable[j].origem !== nodeTable[j+1].origem){ // Criando um node com as infos do objeto
+      cy.add([{
+        data: { label: nodeTable[j].label, initial: nodeTable[j].hasOwnProperty("initial") ? true : false, final: nodeTable[j].hasOwnProperty("final") ? true : false, link: [] },
+        renderedPosition: {
+          x: x,
+          y: y,
+        },
+      }]);
+
+
+      console.log("Label: " + nodeTable[j].label);
+      console.log("Origem: " + nodeTable[j].origem);
+      console.log("Destino: " + nodeTable[j].destino);
+      console.log("Alfabeto: " + nodeTable[j].terminal);
+
+
+      tNodes.push({ nodeid: cy.nodes()[cy.nodes().length - 1].data().id, id: nodeTable[j].label })
+    } else if (nodeTable[j + 1] === undefined || nodeTable[j + 1] === null) { //Quando for o ultimo objeto do vetor, adiciona o node com as infos.
+      cy.add([{
+        data: { label: nodeTable[j].label, initial: nodeTable[j].hasOwnProperty("initial") ? true : false, final: nodeTable[j].hasOwnProperty("final") ? true : false, link: [] },
+        renderedPosition: {
+          x: x,
+          y: y,
+        },
+      }]);
+
+
+      console.log("Label: " + nodeTable[j].label);
+      console.log("Origem: " + nodeTable[j].origem);
+      console.log("Destino: " + nodeTable[j].destino);
+      console.log("Alfabeto: " + nodeTable[j].terminal);
+
+
+      // Push das infos dos nodes e seus respectivos ids no vetor tNodes.
+      tNodes.push({ nodeid: cy.nodes()[cy.nodes().length - 1].data().id, id: nodeTable[j].label })
+    }
+    */
     // Cordenadas aleatorias para o automato ficar mais ou menos distante
     x = x + 45;
     y = y + 37;
 
-
+    
     styleNode(cy.nodes()[cy.nodes().length - 1], '#' + cy.nodes()[cy.nodes().length - 1].data().id)
   }
 
@@ -679,7 +807,7 @@ function convertGrtoAF(production, production_length) {
 
   /*Adicionando as ligações entre os nodes abaixo*/
   for (let w = 0; w < nodeTable.length; w++) {
-    if (nodeTable[w].label !== "Z") {
+    if(nodeTable[w].label !== "Z"){
       cy.add([{
         group: 'edges', data: { source: getReverseReferenceId(nodeTable[w].origem, tNodes), target: getReverseReferenceId(nodeTable[w].destino, tNodes), label: nodeTable[w].terminal }
       }]);
@@ -695,161 +823,58 @@ function convertGrtoAF(production, production_length) {
 
 
 // INICIO DA CONVERÇÃO AF-GR
-let automatonTableOBJ;
 $('#convertAFtoGR').click(function () {
   let grammarOBJ = [];
+  let automatonTableOBJ = [];
   let tNodes = [];
-
-  // Por algum motivo converter pra xml e voltar como objeto json é melhor q tentar entender o cytoscape.
-  let convertionString;
-  convertionString =
-    `<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>&#13;
-    <type>fa</type>&#13;
-    <automaton>&#13;
-    <!--The list of states.-->&#13;`;
+  let counter = 0;
+  
   cy.nodes().forEach(function (ele, index) {
     console.log(ele.data());
-    tNodes.push({ id: index, nodeid: ele.data().id })
-    convertionString +=
-      `<state id="${index}" name="${ele.data().label}">&#13;
-			<x>${ele.position('x')}</x>&#13;
-      <y>${ele.position('y')}</y>&#13;
-      ${ele.data().initial ?
-        `<initial/>&#13;` : ``}
-      ${ele.data().final ?
-        `<final/>&#13;` : ``}
-		</state>&#13; `
-  });
-  console.log(tNodes)
-  convertionString +=
-    `<!--The list of transitions.-->&#13;`;
+    tNodes.push({ id: index, nodeid: ele.data().id });
+    automatonTableOBJ.push(
+      {
+        id: ele.data().id,
+        node: ele.data().label,
+        terminal: "",
+        origem: "",
+        destino: "",
+      }
+    );
+    counter++;
+  })
+  console.log(tNodes);
+  let i = 0;
+  
   cy.edges().forEach(function (ele, index) {
     console.log(ele.data());
-    convertionString +=
-      `<transition>&#13;
-      <from>${getReferenceId(ele.data().source, tNodes)}</from>&#13;
-      <to>${getReferenceId(ele.data().target, tNodes)}</to>&#13;
-      <read>${ele.data().label}</read>&#13;
-    </transition>&#13;`
+
+
+    if( i < index){
+      automatonTableOBJ[i].node = automatonTableOBJ[i].node;
+      automatonTableOBJ[i].terminal = ele.data().label;
+      automatonTableOBJ[i].origem = getReferenceId(ele.data().source, tNodes);
+      automatonTableOBJ[i].destino = getReferenceId(ele.data().target, tNodes);
+      i++;
+    }
+  
   });
 
-  convertionString +=
-    ` 
-    </automaton>&#13;
-  </structure>`
-  console.log(convertionString)
+  for( let j = 0; j < automatonTableOBJ.length; j++){
+    if (automatonTableOBJ[j+1] !== undefined || automatonTableOBJ[j+1] !== null){
+      grammarOBJ.push(
+        {
+          left: automatonTableOBJ[j].node,
+          terminal: automatonTableOBJ[j].terminal,
+          variavel: automatonTableOBJ[j].destino,
+        }
+      );
+    }
+  }
 
-  let contents;
-  let parse;
-
-  contents = convertionString;
-  contents = contents.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '<xml version="1.0" encoding="UTF-8" standalone="no">');
-  contents += '</xml>'
-  parse = xmlToJson.parse(contents);
-  // Por algum motivo converter pra xml e voltar como objeto json é melhor q tentar entender o cytoscape.
-
-  //criando objeto json
-  automatonTableOBJ = parse.xml.structure.automaton;
+  console.log("Tabela de transição dos automatos:\n");
   console.log(automatonTableOBJ);
-  console.log(automatonTableOBJ.transition.length);
-
-  // Vetor com o alfabeto para criar os terminais
-  let alfabeto = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-
-  // tamanho do vetor de transições
-  let transition_size = automatonTableOBJ.transition.length - 1;
-
-  let i = transition_size;
-  let states_counter = 0;
-
-  // Criando a tabela objeto
-  while (i > -1) {
-    if (automatonTableOBJ.state[states_counter].final !== undefined) {
-      grammarOBJ.push(
-        {
-          id: automatonTableOBJ.transition[i].from,
-          state: automatonTableOBJ.transition[i].from,
-          read: automatonTableOBJ.transition[i].read,
-          to: automatonTableOBJ.transition[i].to,
-          final: false,
-        }
-      );
-
-      grammarOBJ.push(
-        {
-          id: automatonTableOBJ.transition[i].from,
-          state: automatonTableOBJ.transition[i].from,
-          read: "λ",
-          to: "",
-          final: true,
-        }
-      );
-
-    } else {
-      grammarOBJ.push(
-        {
-          id: automatonTableOBJ.transition[i].from,
-          state: automatonTableOBJ.transition[i].from,
-          read: automatonTableOBJ.transition[i].read,
-          to: automatonTableOBJ.transition[i].to,
-          final: false,
-        }
-      );
-    }
-
-    if (states_counter < automatonTableOBJ.state.length - 1) {
-      states_counter++;
-    }
-
-    i--;
-  }
-
-  grammarOBJ.forEach(function (element, index) {
-    element.state = alfabeto[element.state];
-    element.to = alfabeto[element.to];
-  });
-
+  console.log("Gramática gerada:\n");
   console.log(grammarOBJ);
-
-  let right = "";
-
-  // Tacando as info na tabela visual
-  for (let i = 0; i < grammarOBJ.length - 1; i++) {
-
-    
-    if (grammarOBJ[i].final !== true) {
-      addTable();
-      right = grammarOBJ[i].read;
-      right += grammarOBJ[i].to;
-      $(`#Token${i}`).text(grammarOBJ[i].state);
-      $(`#Grammar${i}`).text(right);
-
-    } else {
-      addTable();
-      $(`#Token${i}`).text(grammarOBJ[i].state);
-      $(`#Grammar${i}`).text(`λ`);
-    }
-  }
-
-  /* // Versão antiga do conversor para a tabela
-  grammarOBJ.forEach(function (element, index) {
-    addTable();
-    if (element.final != true) {
-      right = element.read;
-      right += element.to;
-      $(`#Token${index}`).text(element.state);
-      $(`#Grammar${index}`).text(right);
-    } else {
-      addTable();
-      right = element.read;
-      right += element.to;
-      $(`#Token${index}`).text(element.state);
-      $(`#Grammar${index}`).text(right);
-      $(`#Token${index+1}`).text(element.state);
-      $(`#Grammar${index+1}`).text(`λ`);;
-    }
-  })
-  */
-
 });
 // FIM DA CONVERÇÃO AF-GR
