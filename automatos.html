@@ -47,6 +47,7 @@
         </div>
     </nav>
 
+    <!-- Botões para manipular os automatos -->
     <div id="automato" class="">
         <div id="mynetwork"></div>
     </div>
@@ -66,8 +67,16 @@
         <a id="excluir" href="#" class="btn btn-secondary">
             <div data-icon="ei-trash"></div>
         </a>
+        <a id="exportar" href="#" class="btn btn-secondary">
+            <div data-icon="ei-arrow-up"></div>
+        </a>
+        <a id="importar" href="#" class="btn btn-secondary">
+            <input id="importB" type="file" name="input-name" style="display: none;" />
+            <div data-icon="ei-arrow-down"></div>
+        </a>
     </div>
 
+    <!-- Modal do Sobre -->
     <div class="modal fade no-select" id="sobreModalAutomatos" tabindex="-1" role="dialog"
         aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -89,9 +98,11 @@
             </div>
         </div>
     </div>
+    <!-- Fim do Modal do Sobre -->
 
-    <div class="modal fade no-select" id="help" tabindex="-1" role="dialog"
-        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <!-- Modal de Ajuda -->
+    <div class="modal fade no-select" id="help" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -102,15 +113,20 @@
                 </div>
                 <div class="modal-body">
                     <h6><b>Autômatos Finitos versão 1.0</b></h6>
-                    <p>Da esquerda para direita, pode se observar cinco ícones embaixo da nav-bar, estes são as opções para manipular os autômatos</p>
-                    <p>Primeira opção: Seleciona o estado do autômato, podendo move-lo e trocar seu estado para inicial ou final</p>
+                    <p>Da esquerda para direita, pode se observar cinco ícones embaixo da nav-bar, estes são as opções
+                        para manipular os autômatos</p>
+                    <p>Primeira opção: Seleciona o estado do autômato, podendo move-lo e trocar seu estado para inicial
+                        ou final</p>
                     <p>Segunda opção: Adiciona estados de um autômato</p>
                     <p>
-                        Terceira opção: Liga um estado ao outro, clique com o botão esquerdo no primeiro estado e 
-                        depois(com o botão esquerdo ainda pressionado) arraste para outro estado, aparecera uma janela pedindo o valor da transição
+                        Terceira opção: Liga um estado ao outro, clique com o botão esquerdo no primeiro estado e
+                        depois(com o botão esquerdo ainda pressionado) arraste para outro estado, aparecera uma janela
+                        pedindo o valor da transição
                     </p>
-                    <p>Quarta opção: Edita o nome do estado ou a transição dele quando clicar com o botão esquerdo do mouse.</p>
-                    <p>Quinta opção: Quando ativa, é possivel deletar os estados e transições com o clique do botão esquerdo do mouse.</p>
+                    <p>Quarta opção: Edita o nome do estado ou a transição dele quando clicar com o botão esquerdo do
+                        mouse.</p>
+                    <p>Quinta opção: Quando ativa, é possivel deletar os estados e transições com o clique do botão
+                        esquerdo do mouse.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Fechar</button>
@@ -118,7 +134,9 @@
             </div>
         </div>
     </div>
+    <!-- Fim Modal de Ajuda -->
 
+    <!-- Conteudo das tabelas onde ficam as opções de verificação -->
     <div class="float-panel float-left">
         <div class="card">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -135,8 +153,12 @@
                         aria-controls="contact" aria-selected="false">Multiplas Entradas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="modal" data-target="#help" href="#" role="tab" aria-controls="contact"
-                        aria-selected="false">Ajuda</a>
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#conversion" role="tab"
+                        aria-controls="contact" aria-selected="false">Conversões</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="modal" data-target="#help" href="#" role="tab"
+                        aria-controls="contact" aria-selected="false">Ajuda</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -159,30 +181,148 @@
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Vão existir coisas aqui no futuro</div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Vão existir coisas
+                    aqui no futuro</div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="modal-div-strings" style="overflow-y: scroll; height: 150px;">
-                            
+
                     </div>
                     <button type="button" class="btn btn-primary" onclick="adicionarInput()">Adicionar Entradas</button>
                     <button id="verificarMultiple" type="button" class="btn btn-primary">Verificar</button>
                 </div>
+                <div class="tab-pane fade" id="conversion" role="tabpanel" aria-labelledby="contact-tab">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AF-e-GR" >AF e GR</button>
+                    <button type="button" class="btn btn-primary" onclick="alert('Fiz o botão já pra vc usar')" >AFD e AFND</button>
+                </div>
             </div>
         </div>
     </div>
+    <!-- Fim Conteudo das tabelas onde ficam as opções de verificação -->
+
+    <!-- Início da conversao entre AF e GR -->
+    <!-- Modal de conversão de GR para AF -->
+    <div class="modal fade no-select" id="AF-e-GR" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>CONVERSÃO GR PARA AF</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <h3 class="card-header text-center font-weight-bold text-uppercase py-4 no-select">GLUD</h3>
+                        <div class="card-body">
+                            <div id="table" class="table-editable">
+                                <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x"
+                                            aria-hidden="true"></i></a></span>
+                                <table id="tabela" class="table table-bordered table-responsive-md table-striped text-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center no-select">Tokens</th>
+                                            <th class="text-center no-select">-></th>
+                                            <th class="text-center no-select">Regra</th>
+                                            <td>
+                                                <span class="table-add"><button type="button"
+                                                        class="btn btn-success btn-rounded btn-sm my-0"
+                                                        onclick="addTable()">Adicionar</button></span>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="main-grammar-container" class="grammar-container">
+                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Editable table -->
+                    <div id="main-card-footer" class="card-footer">
+                        <div id="buttons-main-card-footer" class="buttons-card-footer">
+                            <button id="import-grammar" type="file" class="btn btn-info col-md-3 btn-sm">Importar</button>
+                            <button id="export-grammar" type="button" class="btn btn-danger col-md-3 btn-sm">Exportar</button>
+                            <button id="convertGRtoAF" type="button" 
+                                class="btn btn-secondary col-md-3 btn-sm">Converter GR para AF</button>
+                            <button id="convertAFtoGR" type="button" 
+                                class="btn btn-secondary col-md-3 btn-sm">Converter AF para GF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de conversão de AF para GR -->
+    <!-- div class="modal fade no-select" id="AF-GR" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>CONVERSÃO GR PARA AF</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <h3 class="card-header text-center font-weight-bold text-uppercase py-4 no-select">GLUD</h3>
+                        <div class="card-body">
+                            <div id="table" class="table-editable">
+                                <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                                            class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+                                <table id="tabela" class="table table-bordered table-responsive-md table-striped text-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center no-select">Tokens</th>
+                                            <th class="text-center no-select">-></th>
+                                            <th class="text-center no-select">Regra</th>
+                                            <td>
+                                                <span class="table-add"><button type="button"
+                                                        class="btn btn-success btn-rounded btn-sm my-0"
+                                                        onclick="addTable()">Adicionar</button></span>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="main-grammar-container" class="grammar-container">
+        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="main-card-footer" class="card-footer">
+                        <div id="buttons-main-card-footer" class="buttons-card-footer">
+                            <button type="button" class="btn btn-dark col-md-2 btn-sm" data-toggle="modal"
+                                data-target="#export-and-import-data">Exportar e importar</button>
+                            <button id="convertGRtoAF" type="button"
+                                class="btn btn-secondary col-md-2 btn-sm">Converter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div -->
+    <!-- Fim da conversao entre AF e GR -->
 
     <ul class='custom-menu'>
         <li id="inicial" data-action="first">Inicial</li>
         <li id="final" data-action="second">Final</li>
     </ul>
 
+    <script src="./js/filesaver/FileSaver.js"></script>
     <script src="./js/jquery/jquery-3.4.1.min.js"></script>
     <script src="./js/jquery/popper.min.js"></script>
     <script src="./js/bootstrap/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.9.2/cytoscape.min.js"
         integrity="sha256-/9/zZEd/HVvoKFJ826QwJv6XruSCLbMvgIxA3ohKmVo=" crossorigin="anonymous"></script>
+    <script src="./js/xmlToJson.js"></script>
     <script src="./js/automatos.js"></script>
+    <script src="./js/grammar.js"></script>
+    <script src="./js/grammar-importer.js"></script>
+
 
 </body>
 
