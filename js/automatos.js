@@ -450,12 +450,10 @@ $('#importar').click(function () {
   let contents;
   let parse;
   $('<input type="file">').on('change', function () {
-    myfiles = this.files; //save selected files to the array
-    //console.log(myfiles); //show them on console
+    myfiles = this.files; 
     let reader = new FileReader();
     reader.onload = function (e) {
       contents = e.target.result.toString();
-      //console.log(contents);
       contents = contents.replace('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', '<xml version="1.0" encoding="UTF-8" standalone="no">');
       contents += '</xml>'
       parse = xmlToJson.parse(contents)
@@ -475,7 +473,6 @@ $("#convertGRtoAF").click(function () {
   let production_length = 0;
   cy.remove(cy.elements());
   for (let i = 0; i < table_count; i++) {
-
     if ($(`#Grammar${i}`).text().length < 2) {
       if (isLowerCase($(`#Grammar${i}`).text()) || $(`#Grammar${i}`).text() == "λ") {
         production.push(
