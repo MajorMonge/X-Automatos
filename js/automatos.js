@@ -355,7 +355,7 @@ function resultAutomato(entrada, node, indice) {
   return false;
 }
 
-/* IMPORTAÇÃO */
+/* IMPORTAÇÃO E EXPORTAÇÃO */
 function getReferenceId(id, tNodes) {
   for (let i = 0; i < tNodes.length; i++) {
     if (tNodes[i].nodeid == id) {

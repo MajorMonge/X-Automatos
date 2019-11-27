@@ -193,7 +193,10 @@
                 <div class="tab-pane fade" id="conversion" role="tabpanel" aria-labelledby="contact-tab">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AF-e-GR">AF e
                         GR</button>
-                    <button id="buttonModalAFER" type="button" class="btn btn-primary" data-toggle="modal" data-target="#AF-e-ER">AF e
+                    <button id="buttonModalAFNDAFD" type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#AFND-e-AR">AFND para AFD</button>
+                    <button id="buttonModalAFER" type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#AF-e-ER">AF e
                         ER</button>
                 </div>
             </div>
@@ -297,6 +300,42 @@
         </div>
     </div>
 
+
+    <!-- Modal de resultado de AFND para AFD -->
+    <div class="modal fade no-select" id="AFND-e-AR" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>CONVERSÃO AFND E AF</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <h4>Tabela de Conversão</h4>
+                        <table id="tabelaConversao" style="width:100%">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr id="nodoNulo">
+                                        
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h4>Alfabeto</h4>
+                        <p id="alfabeto">{</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de conversão de AF para GR -->
     <!-- div class="modal fade no-select" id="AF-GR" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
         aria-hidden="true">
@@ -366,6 +405,7 @@
     <script src="./js/grammar.js"></script>
     <script src="./js/grammar-importer.js"></script>
     <script src="./js/af-er.js"></script>
+    <script src="./js/afnd-afd.js"></script>
 
 
 </body>
